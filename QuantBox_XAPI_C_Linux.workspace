@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="Workspace">
+		<Project filename="QuantBox_Queue/QuantBox_Queue.cbp" />
+		<Project filename="QuantBox_CTP_Quote/QuantBox_CTP_Quote.cbp" />
+		<Project filename="QuantBox_CTP_Trade/QuantBox_CTP_Trade.cbp" />
+		<Project filename="QuantBox_LTS_Quote/QuantBox_LTS_Quote.cbp" />
+		<Project filename="QuantBox_LTS_Trade/QuantBox_LTS_Trade.cbp" />
+		<Project filename="QuantBox_LTS_Level2/QuantBox_LTS_Level2.cbp" />
+		<Project filename="QuantBox_XSpeed_Quote/QuantBox_XSpeed_Quote.cbp" />
+		<Project filename="QuantBox_XSpeed_Trade/QuantBox_XSpeed_Trade.cbp" />
+		<Project filename="QuantBox_DFITC_Level2/QuantBox_DFITC_Level2.cbp" />
+		<Project filename="QuantBox_Femas_Quote/QuantBox_CTP_Quote.cbp" />
+		<Project filename="QuantBox_Femas_Trade/QuantBox_Femas_Trade.cbp" />
+		<Project filename="QuantBox_XAPI/QuantBox_XAPI.cbp" />
+		<Project filename="QuantBox_XAPI_TEST/QuantBox_XAPI_TEST.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>

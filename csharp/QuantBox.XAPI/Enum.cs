@@ -1,0 +1,299 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+
+
+namespace QuantBox
+{
+    /// <summary>
+    /// 连接状态
+    /// </summary>
+    public enum ConnectionStatus : byte
+    {
+        /// <summary>
+        /// 未初始化
+        /// </summary>
+        [Description("未初始化")]
+        Uninitialized = 0,
+        /// <summary>
+        /// 已经初始化
+        /// </summary>
+        [Description("已经初始化")]
+        Initialized,
+        /// <summary>
+        /// 连接已经断开
+        /// </summary>
+        [Description("连接已经断开")]
+        Disconnected,
+        /// <summary>
+        /// 连接中...
+        /// </summary>
+        [Description("连接中...")]
+        Connecting,
+        /// <summary>
+        /// 连接成功
+        /// </summary>
+        [Description("连接成功")]
+        Connected,
+        /// <summary>
+        /// 授权中...
+        /// </summary>
+        [Description("授权中...")]
+        Authorizing,
+        /// <summary>
+        /// 授权成功
+        /// </summary>
+        [Description("授权成功")]
+        Authorized,
+        /// <summary>
+        /// 登录中...
+        /// </summary>
+        [Description("登录中...")]
+        Logining,
+        /// <summary>
+        /// 登录成功
+        /// </summary>
+        [Description("登录成功")]
+        Logined,
+        /// <summary>
+        /// 确认中...
+        /// </summary>
+        [Description("确认中...")]
+        Confirming,
+        /// <summary>
+        /// 已经确认
+        /// </summary>
+        [Description("已经确认")]
+        Confirmed,
+        /// <summary>
+        /// 已经确认
+        /// </summary>
+        [Description("操作中...")]
+        Doing,
+        /// <summary>
+        /// 完成
+        /// </summary>
+        [Description("完成")]
+        Done,
+        /// <summary>
+        /// 未知
+        /// </summary>
+        [Description("未知")]
+        Unknown,
+    }
+
+    [Flags]
+    public enum ApiType : byte
+    {
+        Nono = 0,
+        Trade = 1,
+        MarketData = 2,
+        Level2 = 4,
+        QuoteRequest = 8,
+        HistoricalData = 16,
+        Instrument = 32,
+        Query = 64,
+    };
+
+    
+    public enum ResumeType : byte
+    {
+        Restart,
+        Resume,
+        Quick,
+        Undefined,
+    };
+
+    public enum Loglevel : byte
+    {
+        Trace,
+        Debug,
+        Info,
+        Warn,
+        Error,
+        Fatal,
+    };
+
+    public enum PutCall : byte
+    {
+        Put,
+        Call,
+    };
+
+    public enum OrderStatus : byte
+    {
+        NotSent,
+        PendingNew,
+        New,
+        Rejected,
+        PartiallyFilled,
+        Filled,
+        PendingCancel,
+        Cancelled,
+        Expired,
+        PendingReplace,
+        Replaced,
+    };
+
+    public enum OrderSide : byte
+    {
+        Buy,
+        Sell,
+    };
+
+    public enum OrderType : byte
+    {
+        Market,
+        Stop,
+        Limit,
+        StopLimit,
+        MarketOnClose,
+        Pegged,
+        TrailingStop,
+        TrailingStopLimit,
+    };
+
+    public enum TimeInForce : byte
+    {
+        ATC,
+        Day,
+        GTC,
+        IOC,
+        OPG,
+        OC,
+        FOK,
+        GTX,
+        GTD,
+        GFS,
+        AUC,
+    };
+
+    public enum PositionSide : byte
+    {
+        Long,
+        Short,
+    };
+
+    public enum ExecType : byte
+    {
+        ExecNew,
+        ExecStopped,
+        ExecRejected,
+        ExecExpired,
+        ExecTrade,
+        ExecPendingCancel,
+        ExecCancelled,
+        ExecCancelReject,
+        ExecPendingReplace,
+        ExecReplace,
+        ExecReplaceReject,
+    };
+
+    public enum OpenCloseType : byte
+    {
+        Open,
+        Close,
+        CloseToday,
+    };
+
+    public enum HedgeFlagType : byte
+    {
+        Speculation,
+        Arbitrage,
+        Hedge,
+        MarketMaker,
+    };
+
+    public enum InstrumentType : byte
+    {
+	    Stock,
+	    Future,
+	    Option,
+	    FutureOption,
+	    Bond,
+	    FX,
+	    Index,
+	    ETF,
+	    MultiLeg,
+	    Synthetic,
+    };
+
+    public enum IdCardType : byte
+    {
+        EID,				///组织机构代码
+        IDCard,			///中国公民身份证
+        Passport,		///护照
+        LicenseNo,		///营业执照号
+        TaxNo,			///税务登记号/当地纳税ID
+        DrivingLicense,	///驾照
+        SocialID,		///当地社保ID
+        LocalID,			///当地身份证
+        OtherCard,		///其他证件
+    };
+
+    public enum ExchangeType : byte
+    {
+        Undefined,	/// 未定义
+        SHFE,			/// 上期所
+        DCE,			/// 大商所
+        CZCE,			/// 郑商所
+        CFFEX,			/// 中金所
+        INE,			/// 能源中心
+        SSE,			/// 上交所
+        SZSE,			/// 深交所
+        SGE,			/// 上海黄金交易所
+        NEEQ,			/// 全国中小企业股份转让系统,三板
+        HKEx,			/// 港交所
+    };
+
+
+    /// <summary>
+    /// /////////////////////////////////////////////////////////
+    /// </summary>
+
+    public enum BarType:byte
+    {
+        Time = 1,
+        Tick,
+        Volume,
+        Range,
+        Session,
+    };
+
+    public enum DataObjetType : byte
+    {
+        DataObject,
+        Tick,
+        Bid,
+        Ask,
+        Trade,
+        Quote,
+        Bar,
+        Level2,
+        Level2Snapshot,
+        Level2Update,
+    };
+
+    
+
+    
+
+
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+
+    public enum DepthLevelType : byte
+    {
+        L0,
+        L1,
+        L3,
+        L5,
+        L10,
+        FULL,
+    };
+}

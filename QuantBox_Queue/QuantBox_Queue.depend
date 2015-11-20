@@ -1,0 +1,307 @@
+# depslib dependency file v1.0
+1413520148 source:/home/hetao/works/QuantBox_X/QuantBox_Queue/main.cpp
+	"MsgQueue.h"
+	"../include/QueueHeader.h"
+	"../include/ApiHeader.h"
+
+1413530855 /home/hetao/works/QuantBox_X/QuantBox_Queue/MsgQueue.h
+	<thread>
+	<mutex>
+	<cstring>
+	"../include/QueueHeader.h"
+	"../include/QueueStruct.h"
+	"readerwriterqueue.h"
+
+1413530528 /home/hetao/works/QuantBox_X/include/QueueHeader.h
+
+1409657702 /home/hetao/works/QuantBox_X/QuantBox_Queue/readerwriterqueue.h
+	"atomicops.h"
+	<type_traits>
+	<utility>
+	<cassert>
+	<stdexcept>
+	<cstdint>
+	<cstdlib>
+
+1409657702 /home/hetao/works/QuantBox_X/QuantBox_Queue/atomicops.h
+	<cassert>
+	<intrin.h>
+	<ppcintrinsics.h>
+	<atomic>
+	<atomic>
+	<utility>
+
+1413453249 /home/hetao/works/QuantBox_X/include/ApiHeader.h
+
+1413453085 source:/home/hetao/works/QuantBox_X/QuantBox_Queue/MsgQueue.cpp
+	"MsgQueue.h"
+
+1413530669 /home/hetao/works/QuantBox_X/include/QueueStruct.h
+
+1418803816 source:/home/hetao/works/QuantBox_XAPI/QuantBox_Queue/main.cpp
+	"stdafx.h"
+	"MsgQueue.h"
+	"../include/QueueHeader.h"
+	"../include/QueueEnum.h"
+	"../include/QueueStruct.h"
+	"../include/ApiHeader.h"
+
+1418803759 /home/hetao/works/QuantBox_XAPI/QuantBox_Queue/MsgQueue.h
+	<thread>
+	<mutex>
+	<cstring>
+	<condition_variable>
+	"../include/QueueHeader.h"
+	"../include/QueueStruct.h"
+	"readerwriterqueue.h"
+
+1418803756 /home/hetao/works/QuantBox_XAPI/include/QueueHeader.h
+	"../include/CrossPlatform.h"
+
+1418803758 /home/hetao/works/QuantBox_XAPI/include/QueueStruct.h
+
+1418803759 /home/hetao/works/QuantBox_XAPI/QuantBox_Queue/readerwriterqueue.h
+	"atomicops.h"
+	<type_traits>
+	<utility>
+	<cassert>
+	<stdexcept>
+	<cstdint>
+	<cstdlib>
+
+1418803759 /home/hetao/works/QuantBox_XAPI/QuantBox_Queue/atomicops.h
+	<cassert>
+	<intrin.h>
+	<ppcintrinsics.h>
+	<atomic>
+	<atomic>
+	<utility>
+
+1418803757 /home/hetao/works/QuantBox_XAPI/include/QueueEnum.h
+
+1418803758 /home/hetao/works/QuantBox_XAPI/include/ApiHeader.h
+	"../include/CrossPlatform.h"
+
+1418803759 source:/home/hetao/works/QuantBox_XAPI/QuantBox_Queue/MsgQueue.cpp
+	"stdafx.h"
+	"MsgQueue.h"
+
+1418803759 /home/hetao/works/QuantBox_XAPI/QuantBox_Queue/stdafx.h
+	"targetver.h"
+	<windows.h>
+
+1418803759 /home/hetao/works/QuantBox_XAPI/QuantBox_Queue/targetver.h
+	<SDKDDKVer.h>
+
+1418803756 /home/hetao/works/QuantBox_XAPI/include/CrossPlatform.h
+
+1423400763 source:/home/mep/dev/broker/dev/QuantBox_XAPI/QuantBox_Queue/main.cpp
+	"stdafx.h"
+	"MsgQueue.h"
+	"../include/QueueHeader.h"
+	"../include/QueueEnum.h"
+	"../include/QueueStruct.h"
+	"../include/ApiHeader.h"
+
+1422933327 /home/mep/dev/broker/dev/QuantBox_XAPI/QuantBox_Queue/stdafx.h
+	"targetver.h"
+	<windows.h>
+
+1422933327 /home/mep/dev/broker/dev/QuantBox_XAPI/QuantBox_Queue/targetver.h
+	<SDKDDKVer.h>
+
+1423400763 /home/mep/dev/broker/dev/QuantBox_XAPI/QuantBox_Queue/MsgQueue.h
+	<thread>
+	<mutex>
+	<cstring>
+	<condition_variable>
+	"../include/CrossPlatform.h"
+	"../include/QueueHeader.h"
+	"../include/QueueStruct.h"
+	"readerwriterqueue.h"
+
+1422933327 /home/mep/dev/broker/dev/QuantBox_XAPI/include/CrossPlatform.h
+
+1422933328 /home/mep/dev/broker/dev/QuantBox_XAPI/include/QueueHeader.h
+	"../include/CrossPlatform.h"
+
+1423400763 /home/mep/dev/broker/dev/QuantBox_XAPI/include/QueueStruct.h
+
+1422933327 /home/mep/dev/broker/dev/QuantBox_XAPI/QuantBox_Queue/readerwriterqueue.h
+	"atomicops.h"
+	<type_traits>
+	<utility>
+	<cassert>
+	<stdexcept>
+	<cstdint>
+	<cstdlib>
+
+1422933327 /home/mep/dev/broker/dev/QuantBox_XAPI/QuantBox_Queue/atomicops.h
+	<cassert>
+	<intrin.h>
+	<ppcintrinsics.h>
+	<atomic>
+	<atomic>
+	<utility>
+
+1423106129 /home/mep/dev/broker/dev/QuantBox_XAPI/include/QueueEnum.h
+
+1422933327 /home/mep/dev/broker/dev/QuantBox_XAPI/include/ApiHeader.h
+	"../include/CrossPlatform.h"
+
+1423400762 source:/home/mep/dev/broker/dev/QuantBox_XAPI/QuantBox_Queue/MsgQueue.cpp
+	"stdafx.h"
+	"MsgQueue.h"
+
+1428715466 source:/home/mep/dev/broker/oss/QuantBox_XAPI/QuantBox_Queue/main.cpp
+	"stdafx.h"
+	"MsgQueue.h"
+	"../include/QueueHeader.h"
+	"../include/QueueEnum.h"
+	"../include/QueueStruct.h"
+	"../include/ApiHeader.h"
+	"../include/ApiStruct.h"
+
+1426762120 /home/mep/dev/broker/oss/QuantBox_XAPI/QuantBox_Queue/stdafx.h
+	"targetver.h"
+	<windows.h>
+
+1426762120 /home/mep/dev/broker/oss/QuantBox_XAPI/QuantBox_Queue/targetver.h
+	<SDKDDKVer.h>
+
+1430095642 /home/mep/dev/broker/oss/QuantBox_XAPI/QuantBox_Queue/MsgQueue.h
+	<thread>
+	<mutex>
+	<cstring>
+	<condition_variable>
+	"../include/CrossPlatform.h"
+	"../include/QueueHeader.h"
+	"../include/QueueStruct.h"
+	"../include/ApiStruct.h"
+	"concurrentqueue.h"
+
+1426762121 /home/mep/dev/broker/oss/QuantBox_XAPI/include/CrossPlatform.h
+
+1426762122 /home/mep/dev/broker/oss/QuantBox_XAPI/include/QueueHeader.h
+	"../include/CrossPlatform.h"
+
+1426762122 /home/mep/dev/broker/oss/QuantBox_XAPI/include/QueueStruct.h
+
+1426762120 /home/mep/dev/broker/oss/QuantBox_XAPI/QuantBox_Queue/readerwriterqueue.h
+	"atomicops.h"
+	<type_traits>
+	<utility>
+	<cassert>
+	<stdexcept>
+	<cstdint>
+	<cstdlib>
+
+1426762120 /home/mep/dev/broker/oss/QuantBox_XAPI/QuantBox_Queue/atomicops.h
+	<cassert>
+	<intrin.h>
+	<ppcintrinsics.h>
+	<atomic>
+	<atomic>
+	<utility>
+
+1426762573 /home/mep/dev/broker/oss/QuantBox_XAPI/QuantBox_Queue/concurrentqueue.h
+	"relacy/relacy_std.hpp"
+	"relacy_shims.h"
+	<atomic>
+	<cassert>
+	<cstdint>
+	<cstdlib>
+	<type_traits>
+	<algorithm>
+	<utility>
+	<limits>
+	<climits>
+	<array>
+	<thread>
+	"internal/concurrentqueue_internal_debug.h"
+
+1430095642 /home/mep/dev/broker/oss/QuantBox_XAPI/include/QueueEnum.h
+
+1426762120 /home/mep/dev/broker/oss/QuantBox_XAPI/include/ApiHeader.h
+	"../include/CrossPlatform.h"
+
+1428715466 source:/home/mep/dev/broker/oss/QuantBox_XAPI/QuantBox_Queue/MsgQueue.cpp
+	"stdafx.h"
+	"MsgQueue.h"
+
+1428847651 source:/home/mep/dev/broker/QuantBox_XAPI/QuantBox_Queue/main.cpp
+	"stdafx.h"
+	"MsgQueue.h"
+	"../include/QueueHeader.h"
+	"../include/QueueEnum.h"
+	"../include/QueueStruct.h"
+	"../include/ApiHeader.h"
+	"../include/ApiStruct.h"
+
+1427744516 /home/mep/dev/broker/QuantBox_XAPI/QuantBox_Queue/stdafx.h
+	"targetver.h"
+	<windows.h>
+
+1427744516 /home/mep/dev/broker/QuantBox_XAPI/QuantBox_Queue/targetver.h
+	<SDKDDKVer.h>
+
+1431172315 /home/mep/dev/broker/QuantBox_XAPI/QuantBox_Queue/MsgQueue.h
+	<thread>
+	<mutex>
+	<cstring>
+	<condition_variable>
+	<atomic>
+	"../include/CrossPlatform.h"
+	"../include/QueueHeader.h"
+	"../include/QueueStruct.h"
+	"../include/ApiStruct.h"
+	"concurrentqueue.h"
+
+1427744516 /home/mep/dev/broker/QuantBox_XAPI/include/CrossPlatform.h
+
+1427744517 /home/mep/dev/broker/QuantBox_XAPI/include/QueueHeader.h
+	"../include/CrossPlatform.h"
+
+1427744517 /home/mep/dev/broker/QuantBox_XAPI/include/QueueStruct.h
+
+1430664196 /home/mep/dev/broker/QuantBox_XAPI/include/ApiStruct.h
+	"ApiDataType.h"
+	"ApiEnum.h"
+
+1428847651 /home/mep/dev/broker/QuantBox_XAPI/include/ApiDataType.h
+
+1430664196 /home/mep/dev/broker/QuantBox_XAPI/include/ApiEnum.h
+
+1427744516 /home/mep/dev/broker/QuantBox_XAPI/QuantBox_Queue/concurrentqueue.h
+	"relacy/relacy_std.hpp"
+	"relacy_shims.h"
+	<atomic>
+	<cassert>
+	<cstdint>
+	<cstdlib>
+	<type_traits>
+	<algorithm>
+	<utility>
+	<limits>
+	<climits>
+	<array>
+	<thread>
+	"internal/concurrentqueue_internal_debug.h"
+
+1430046462 /home/mep/dev/broker/QuantBox_XAPI/include/QueueEnum.h
+
+1427744516 /home/mep/dev/broker/QuantBox_XAPI/include/ApiHeader.h
+	"../include/CrossPlatform.h"
+
+1428847651 source:/home/mep/dev/broker/QuantBox_XAPI/QuantBox_Queue/MsgQueue.cpp
+	"stdafx.h"
+	"MsgQueue.h"
+
+1430808448 /home/mep/dev/broker/oss/QuantBox_XAPI/include/ApiStruct.h
+	"ApiDataType.h"
+	"ApiEnum.h"
+
+1428715466 /home/mep/dev/broker/oss/QuantBox_XAPI/include/ApiDataType.h
+
+1430808448 /home/mep/dev/broker/oss/QuantBox_XAPI/include/ApiEnum.h
+
