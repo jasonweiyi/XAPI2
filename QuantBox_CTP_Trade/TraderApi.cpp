@@ -591,7 +591,7 @@ void CTraderApi::OnRspOrderInsert(CThostFtdcInputOrderField *pInputOrder, CThost
 		// 找到了，要更新状态
 		// 得使用上次的状态
 		OrderField* pField = it->second;
-		pField->ExecType = ExecType::ExecRejected;
+		pField->ExecType = ExecType::ExecType_Rejected;
 		pField->Status = OrderStatus::OrderStatus_Rejected;
 		pField->RawErrorID = pRspInfo->ErrorID;
 		strncpy(pField->Text, pRspInfo->ErrorMsg, sizeof(Char256Type));
@@ -623,7 +623,7 @@ void CTraderApi::OnErrRtnOrderInsert(CThostFtdcInputOrderField *pInputOrder, CTh
 		// 找到了，要更新状态
 		// 得使用上次的状态
 		OrderField* pField = it->second;
-		pField->ExecType = ExecType::ExecRejected;
+		pField->ExecType = ExecType::ExecType_Rejected;
 		pField->Status = OrderStatus::OrderStatus_Rejected;
 		pField->RawErrorID = pRspInfo->ErrorID;
 		strncpy(pField->Text, pRspInfo->ErrorMsg, sizeof(Char256Type));
@@ -717,7 +717,7 @@ void CTraderApi::OnRspOrderAction(CThostFtdcInputOrderActionField *pInputOrderAc
 		OrderField* pField = it->second;
 		strcpy(pField->ID, orderId);
 		strcpy(pField->LocalID, pField->ID);
-		pField->ExecType = ExecType::ExecCancelReject;
+		pField->ExecType = ExecType::ExecType_CancelReject;
 		pField->RawErrorID = pRspInfo->ErrorID;
 		strncpy(pField->Text, pRspInfo->ErrorMsg, sizeof(Char256Type));
 		m_msgQueue->Input_Copy(ResponeType::OnRtnOrder, m_msgQueue, m_pClass, 0, 0, pField, sizeof(OrderField), nullptr, 0, nullptr, 0);
@@ -749,7 +749,7 @@ void CTraderApi::OnErrRtnOrderAction(CThostFtdcOrderActionField *pOrderAction, C
 		OrderField* pField = it->second;
 		strcpy(pField->ID, orderId);
 		strcpy(pField->LocalID, pField->ID);
-		pField->ExecType = ExecType::ExecCancelReject;
+		pField->ExecType = ExecType::ExecType_CancelReject;
 		pField->RawErrorID = pRspInfo->ErrorID;
 		strncpy(pField->Text, pRspInfo->ErrorMsg, sizeof(Char256Type));
 		m_msgQueue->Input_Copy(ResponeType::OnRtnOrder, m_msgQueue, m_pClass, 0, 0, pField, sizeof(OrderField), nullptr, 0, nullptr, 0);
@@ -866,7 +866,7 @@ void CTraderApi::OnRspQuoteInsert(CThostFtdcInputQuoteField *pInputQuote, CThost
 		// 找到了，要更新状态
 		// 得使用上次的状态
 		QuoteField* pField = it->second;
-		pField->ExecType = ExecType::ExecRejected;
+		pField->ExecType = ExecType::ExecType_Rejected;
 		pField->Status = OrderStatus::OrderStatus_Rejected;
 		pField->RawErrorID = pRspInfo->ErrorID;
 		strncpy(pField->Text, pRspInfo->ErrorMsg, sizeof(Char256Type));
@@ -898,7 +898,7 @@ void CTraderApi::OnErrRtnQuoteInsert(CThostFtdcInputQuoteField *pInputQuote, CTh
 		// 找到了，要更新状态
 		// 得使用上次的状态
 		QuoteField* pField = it->second;
-		pField->ExecType = ExecType::ExecRejected;
+		pField->ExecType = ExecType::ExecType_Rejected;
 		pField->Status = OrderStatus::OrderStatus_Rejected;
 		pField->RawErrorID = pRspInfo->ErrorID;
 		strncpy(pField->Text, pRspInfo->ErrorMsg, sizeof(Char256Type));
@@ -994,7 +994,7 @@ void CTraderApi::OnRspQuoteAction(CThostFtdcInputQuoteActionField *pInputQuoteAc
 		strcpy(pField->LocalID, pField->ID);
 		//sprintf(pField->AskID, "%d:%d:%s", pInputQuoteAction->FrontID, pInputQuoteAction->SessionID, pInputQuoteAction->);
 		//sprintf(pField->BidID, "%d:%d:%s", pInputQuoteAction->FrontID, pInputQuoteAction->SessionID, pInputQuoteAction->QuoteRef);
-		pField->ExecType = ExecType::ExecCancelReject;
+		pField->ExecType = ExecType::ExecType_CancelReject;
 		pField->RawErrorID = pRspInfo->ErrorID;
 		strncpy(pField->Text, pRspInfo->ErrorMsg, sizeof(Char256Type));
 		m_msgQueue->Input_Copy(ResponeType::OnRtnQuote, m_msgQueue, m_pClass, 0, 0, pField, sizeof(QuoteField), nullptr, 0, nullptr, 0);
@@ -1027,7 +1027,7 @@ void CTraderApi::OnErrRtnQuoteAction(CThostFtdcQuoteActionField *pQuoteAction, C
 		QuoteField* pField = it->second;
 		strcpy(pField->ID, quoteId);
 		strcpy(pField->LocalID, pField->ID);
-		pField->ExecType = ExecType::ExecCancelReject;
+		pField->ExecType = ExecType::ExecType_CancelReject;
 		pField->RawErrorID = pRspInfo->ErrorID;
 		strncpy(pField->Text, pRspInfo->ErrorMsg, sizeof(Char256Type));
 		m_msgQueue->Input_Copy(ResponeType::OnRtnQuote, m_msgQueue, m_pClass, 0, 0, pField, sizeof(QuoteField), nullptr, 0, nullptr, 0);
@@ -1341,7 +1341,7 @@ void CTraderApi::OnOrder(CThostFtdcOrderField *pOrder)
 			pField->Qty = pOrder->VolumeTotalOriginal;
 			pField->Type = CThostFtdcOrderField_2_OrderType(pOrder);
 			pField->TimeInForce = CThostFtdcOrderField_2_TimeInForce(pOrder);
-			pField->ExecType = ExecType::ExecNew;
+			pField->ExecType = ExecType::ExecType_New;
 			strcpy(pField->OrderID, pOrder->OrderSysID);
 
 
@@ -1590,7 +1590,7 @@ void CTraderApi::OnQuote(CThostFtdcQuoteField *pQuote)
 
 			//pField->ExecType = ExecType::ExecNew;
 			pField->Status = CThostFtdcQuoteField_2_OrderStatus(pQuote);
-			pField->ExecType = ExecType::ExecNew;
+			pField->ExecType = ExecType::ExecType_New;
 
 
 			// 添加到map中，用于其它工具的读取，撤单失败时的再通知等

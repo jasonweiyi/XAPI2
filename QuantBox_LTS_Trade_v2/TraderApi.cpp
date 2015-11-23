@@ -537,7 +537,7 @@ void CTraderApi::OnRspOrderInsert(CSecurityFtdcInputOrderField *pInputOrder, CSe
 		OrderField* pField = it->second;
 		strcpy(pField->ID, orderId);
 		strcpy(pField->LocalID, pField->ID);
-		pField->ExecType = ExecType::ExecRejected;
+		pField->ExecType = ExecType::ExecType_Rejected;
 		pField->Status = OrderStatus::OrderStatus_Rejected;
 		pField->RawErrorID = pRspInfo->ErrorID;
 		strncpy(pField->Text, pRspInfo->ErrorMsg, sizeof(Char256Type));
@@ -571,7 +571,7 @@ void CTraderApi::OnErrRtnOrderInsert(CSecurityFtdcInputOrderField *pInputOrder, 
 		OrderField* pField = it->second;
 		strcpy(pField->ID, orderId);
 		strcpy(pField->LocalID, pField->ID);
-		pField->ExecType = ExecType::ExecRejected;
+		pField->ExecType = ExecType::ExecType_Rejected;
 		pField->Status = OrderStatus::OrderStatus_Rejected;
 		pField->RawErrorID = pRspInfo->ErrorID;
 		strncpy(pField->Text, pRspInfo->ErrorMsg, sizeof(Char256Type));
@@ -662,7 +662,7 @@ void CTraderApi::OnRspOrderAction(CSecurityFtdcInputOrderActionField *pInputOrde
 		// 找到了，要更新状态
 		// 得使用上次的状态
 		OrderField* pField = it->second;
-		pField->ExecType = ExecType::ExecCancelReject;
+		pField->ExecType = ExecType::ExecType_CancelReject;
 		pField->RawErrorID = pRspInfo->ErrorID;
 		strncpy(pField->Text, pRspInfo->ErrorMsg, sizeof(Char256Type));
 		m_msgQueue->Input_Copy(ResponeType::OnRtnOrder, m_msgQueue, m_pClass, 0, 0, pField, sizeof(OrderField), nullptr, 0, nullptr, 0);
@@ -692,7 +692,7 @@ void CTraderApi::OnErrRtnOrderAction(CSecurityFtdcOrderActionField *pOrderAction
 		// 找到了，要更新状态
 		// 得使用上次的状态
 		OrderField* pField = it->second;
-		pField->ExecType = ExecType::ExecCancelReject;
+		pField->ExecType = ExecType::ExecType_CancelReject;
 		pField->RawErrorID = pRspInfo->ErrorID;
 		strncpy(pField->Text, pRspInfo->ErrorMsg, sizeof(Char256Type));
 		m_msgQueue->Input_Copy(ResponeType::OnRtnOrder, m_msgQueue, m_pClass, 0, 0, pField, sizeof(OrderField), nullptr, 0, nullptr, 0);
@@ -766,7 +766,7 @@ void CTraderApi::OnOrder(CSecurityFtdcOrderField *pOrder, bool bFromQry)
 			pField->Qty = pOrder->VolumeTotalOriginal;
 			pField->Type = CSecurityFtdcOrderField_2_OrderType(pOrder);
 			pField->TimeInForce = CSecurityFtdcOrderField_2_TimeInForce(pOrder);
-			pField->ExecType = ExecType::ExecNew;
+			pField->ExecType = ExecType::ExecType_New;
 			strcpy(pField->OrderID, pOrder->OrderSysID);
 
 

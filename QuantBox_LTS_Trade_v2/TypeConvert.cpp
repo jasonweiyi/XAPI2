@@ -24,10 +24,10 @@ HedgeFlagType TSecurityFtdcHedgeFlagType_2_HedgeFlagType(TSecurityFtdcHedgeFlagT
 	//case SECURITY_FTDC_HF_Arbitrage:
 	//	return HedgeFlagType::Arbitrage;
 	case SECURITY_FTDC_HF_Hedge:
-		return HedgeFlagType::Hedge;
+		return HedgeFlagType::HedgeFlagType_Hedge;
 	case SECURITY_FTDC_HF_Speculation:
 	default:
-		return HedgeFlagType::Speculation;
+		return HedgeFlagType::HedgeFlagType_Speculation;
 	}
 }
 
@@ -37,9 +37,9 @@ TSecurityFtdcHedgeFlagType HedgeFlagType_2_TSecurityFtdcHedgeFlagType(HedgeFlagT
 	{
 	//case HedgeFlagType::Arbitrage:
 	//	return SECURITY_FTDC_HF_Arbitrage;
-	case HedgeFlagType::Hedge:
+	case HedgeFlagType::HedgeFlagType_Hedge:
 		return SECURITY_FTDC_HF_Hedge;
-	case HedgeFlagType::Speculation:
+	case HedgeFlagType::HedgeFlagType_Speculation:
 	default:
 		return SECURITY_FTDC_HF_Speculation;
 	}
@@ -196,17 +196,17 @@ ExecType CSecurityFtdcOrderField_2_ExecType(CSecurityFtdcOrderField* pIn)
 	{
 	case SECURITY_FTDC_OST_Canceled:
 		if (pIn->OrderSubmitStatus == SECURITY_FTDC_OSS_InsertRejected)
-			return ExecType::ExecRejected;
-		return ExecType::ExecCancelled;
+			return ExecType::ExecType_Rejected;
+		return ExecType::ExecType_Cancelled;
 	case SECURITY_FTDC_OST_Unknown:
 		// 如果是撤单，也有可能出现这一条，如何过滤？
 		if (pIn->OrderSubmitStatus == SECURITY_FTDC_OSS_InsertSubmitted)
-			return ExecType::ExecNew;
+			return ExecType::ExecType_New;
 	case SECURITY_FTDC_OST_AllTraded:
 	case SECURITY_FTDC_OST_PartTradedQueueing:
-		return ExecType::ExecTrade;
+		return ExecType::ExecType_Trade;
 	default:
-		return ExecType::ExecNew;
+		return ExecType::ExecType_New;
 	}
 }
 

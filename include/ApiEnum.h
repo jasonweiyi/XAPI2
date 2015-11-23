@@ -26,7 +26,7 @@ enum ApiType :char
 	ApiType_Nono = 0,				/// 无
 	ApiType_Trade = 1,				/// 交易，只下单撤单
 	ApiType_MarketData = 2,			/// 行情
-	ApiType_Level2 = 4,				///	Level2行情
+	ApiType_Level2 = 4,				///	Level2行情，这是否有保留的必要？
 	ApiType_QuoteRequest = 8,
 	ApiType_HistoricalData = 16,
 	ApiType_Instrument = 32,
@@ -43,14 +43,14 @@ enum ResumeType :char
 };
 
 /// 日志记录级别
-enum Loglevel :char
+enum LogLevel :char
 {
-	Loglevel_Trace,
-	Loglevel_Debug,
-	Loglevel_Info,
-	Loglevel_Warn,
-	Loglevel_Error,
-	Loglevel_Fatal,
+	LogLevel_Trace,
+	LogLevel_Debug,
+	LogLevel_Info,
+	LogLevel_Warn,
+	LogLevel_Error,
+	LogLevel_Fatal,
 };
 
 /// 期权类型
@@ -76,11 +76,16 @@ enum OrderStatus :char
 	OrderStatus_Replaced,
 };
 
-/// 
+/// 方向，没有区分ETF与开放式基金的申购赎回
+/// 新股申购、回购，质押都暂时不写入，等业务掌握熟了后再加
 enum OrderSide :char
 {
 	OrderSide_Buy,
 	OrderSide_Sell,
+	OrderSide_Creation,		///申购
+	OrderSide_Redemption,	///赎回
+	OrderSide_Merge,		///合并
+	OrderSide_Split,		///拆分
 };
 
 /// 报单类型，与OpenQuant2014中的值一样
@@ -125,19 +130,20 @@ enum PositionSide :char
 /// 一般与OrderStatus对应，但ExecCancelReject与ExecReplaceReject时与OrderStatus不对应
 enum ExecType : char
 {
-	ExecNew,
-	ExecStopped,
-	ExecRejected,
-	ExecExpired,
-	ExecTrade,
-	ExecPendingCancel,
-	ExecCancelled,
-	ExecCancelReject,
-	ExecPendingReplace,
-	ExecReplace,
-	ExecReplaceReject,
+	ExecType_New,
+	ExecType_Stopped,
+	ExecType_Rejected,
+	ExecType_Expired,
+	ExecType_Trade,
+	ExecType_PendingCancel,
+	ExecType_Cancelled,
+	ExecType_CancelReject,
+	ExecType_PendingReplace,
+	ExecType_Replace,
+	ExecType_ReplaceReject,
 };
 
+///开平标志，没有提供专门的平昨，而是用Close
 enum OpenCloseType :char
 {
 	OpenCloseType_Open,
@@ -145,12 +151,19 @@ enum OpenCloseType :char
 	OpenCloseType_CloseToday,
 };
 
+///投机套保标志
 enum HedgeFlagType :char
 {
-	Speculation,
-	Arbitrage,
-	Hedge,
-	MarketMaker,
+	///投机
+	HedgeFlagType_Speculation,
+	///套利
+	HedgeFlagType_Arbitrage,
+	///套保
+	HedgeFlagType_Hedge,
+	///备兑,参考于CTPZQ
+	HedgeFlagType_Covered,
+	///做市商,参考于Femas
+	HedgeFlagType_MarketMaker,
 };
 
 /// 合约类型，与OpenQuant2014中的值一样
@@ -169,7 +182,7 @@ enum InstrumentType :char
 };
 
 //////////////////////////////////////////////////////////////////////////
-/// 证件类型
+/// 证件类型，参考于CTP，去除了一些感觉不大可能用到的类型
 /// 一般登录时返回，原计划是对机构账号与个人账号进行区别收费
 enum IdCardType:char
 {
@@ -205,6 +218,32 @@ enum ExchangeType :char
 };
 
 
+///合约生命周期状态类型
+enum InstLifePhaseType :char
+{
+	InstLifePhaseType_NotStart,		///未上市
+	InstLifePhaseType_Started,		///上市
+	InstLifePhaseType_Pause,		///停牌
+	InstLifePhaseType_Expired,		///到期
+
+	InstLifePhaseType_Issue,		///发行,参考于XSpeed
+	InstLifePhaseType_FirstList,	///首日上市,参考于XSpeed
+	InstLifePhaseType_UnList,		///退市,参考于XSpeed
+};
+
+///交易阶段类型
+enum TradingPhaseType :char
+{
+	TradingPhaseType_BeforeTrading,		///开盘前
+	TradingPhaseType_NoTrading,			///非交易
+	TradingPhaseType_Continuous,		///连续交易
+	TradingPhaseType_AuctionOrdering,	///集合竞价报单
+	TradingPhaseType_AuctionBalance,	///集合竞价价格平衡
+	TradingPhaseType_AuctionMatch,		///集合竞价撮合
+	TradingPhaseType_Closed,			///收盘
+	TradingPhaseType_Suspension,		///停牌时段,参考于LTS
+	TradingPhaseType_Fuse,				///熔断时段,参考于LTS
+};
 
 
 

@@ -187,7 +187,7 @@ int main_1(int argc, char* argv[])
 		memset(pOrder, 0, sizeof(OrderField));
 		strcpy(pOrder->InstrumentID, "IF1504");
 		pOrder->OpenClose = OpenCloseType::OpenCloseType_Open;
-		pOrder->HedgeFlag = HedgeFlagType::Speculation;
+		pOrder->HedgeFlag = HedgeFlagType::HedgeFlagType_Speculation;
 		pOrder->Price = 4000;
 		pOrder->Qty = 1;
 		pOrder->Type = OrderType::OrderType_Limit;

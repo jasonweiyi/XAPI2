@@ -585,12 +585,12 @@ int CTraderApi::_ReqOrderInsert(char type, void* pApi1, void* pApi2, double doub
 		OrderField* pField = ppOrders[i];
 		if (pField->RawErrorID != 0)
 		{
-			pField->ExecType = ExecType::ExecRejected;
+			pField->ExecType = ExecType::ExecType_Rejected;
 			pField->Status = OrderStatus::OrderStatus_Rejected;
 		}
 		else
 		{
-			pField->ExecType = ExecType::ExecNew;
+			pField->ExecType = ExecType::ExecType_New;
 			pField->Status = OrderStatus::OrderStatus_New;
 		}
 		
@@ -678,7 +678,7 @@ int CTraderApi::_ReqOrderAction(char type, void* pApi1, void* pApi2, double doub
 				ppOrders[i]->RawErrorID = ppErrs[i]->ErrCode;
 				strcpy(ppOrders[i]->Text, ppErrs[i]->ErrInfo);
 
-				ppOrders[i]->ExecType = ExecType::ExecCancelReject;
+				ppOrders[i]->ExecType = ExecType::ExecType_CancelReject;
 				// 注意报单状态问题
 			}
 			else

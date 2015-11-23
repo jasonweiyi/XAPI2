@@ -981,7 +981,7 @@ void CQueryApi::OnOrder(CSecurityFtdcOrderField *pOrder, bool bFromQry)
 			pField->Qty = pOrder->VolumeTotalOriginal;
 			pField->Type = CSecurityFtdcOrderField_2_OrderType(pOrder);
 			pField->TimeInForce = CSecurityFtdcOrderField_2_TimeInForce(pOrder);
-			pField->ExecType = ExecType::ExecNew;
+			pField->ExecType = ExecType::ExecType_New;
 			strcpy(pField->OrderID, pOrder->OrderSysID);
 
 

@@ -24,12 +24,12 @@ HedgeFlagType TThostFtdcHedgeFlagType_2_HedgeFlagType(TThostFtdcHedgeFlagType In
 	switch (In)
 	{
 	case THOST_FTDC_HF_Arbitrage:
-		return HedgeFlagType::Arbitrage;
+		return HedgeFlagType::HedgeFlagType_Arbitrage;
 	case THOST_FTDC_HF_Hedge:
-		return HedgeFlagType::Hedge;
+		return HedgeFlagType::HedgeFlagType_Hedge;
 	case THOST_FTDC_HF_Speculation:
 	default:
-		return HedgeFlagType::Speculation;
+		return HedgeFlagType::HedgeFlagType_Speculation;
 	}
 }
 
@@ -37,11 +37,11 @@ TThostFtdcHedgeFlagType HedgeFlagType_2_TThostFtdcHedgeFlagType(HedgeFlagType In
 {
 	switch (In)
 	{
-	case HedgeFlagType::Arbitrage:
+	case HedgeFlagType::HedgeFlagType_Arbitrage:
 		return THOST_FTDC_HF_Arbitrage;
-	case HedgeFlagType::Hedge:
+	case HedgeFlagType::HedgeFlagType_Hedge:
 		return THOST_FTDC_HF_Hedge;
-	case HedgeFlagType::Speculation:
+	case HedgeFlagType::HedgeFlagType_Speculation:
 	default:
 		return THOST_FTDC_HF_Speculation;
 	}
@@ -163,17 +163,17 @@ ExecType CThostFtdcOrderField_2_ExecType(CThostFtdcOrderField* pIn)
 	{
 	case THOST_FTDC_OST_Canceled:
 		if (pIn->OrderSubmitStatus == THOST_FTDC_OSS_InsertRejected)
-			return ExecType::ExecRejected;
-		return ExecType::ExecCancelled;
+			return ExecType::ExecType_Rejected;
+		return ExecType::ExecType_Cancelled;
 	case THOST_FTDC_OST_Unknown:
 		// 如果是撤单，也有可能出现这一条，如何过滤？
 		if (pIn->OrderSubmitStatus == THOST_FTDC_OSS_InsertSubmitted)
-			return ExecType::ExecNew;
+			return ExecType::ExecType_New;
 	case THOST_FTDC_OST_AllTraded:
 	case THOST_FTDC_OST_PartTradedQueueing:
-		return ExecType::ExecTrade;
+		return ExecType::ExecType_Trade;
 	default:
-		return ExecType::ExecNew;
+		return ExecType::ExecType_New;
 	}
 }
 
@@ -210,20 +210,20 @@ ExecType CThostFtdcQuoteField_2_ExecType(CThostFtdcQuoteField* pIn)
 	{
 	case THOST_FTDC_OST_Canceled:
 		if (pIn->OrderSubmitStatus == THOST_FTDC_OSS_InsertRejected)
-			return ExecType::ExecRejected;
-		return ExecType::ExecCancelled;
+			return ExecType::ExecType_Rejected;
+		return ExecType::ExecType_Cancelled;
 	case THOST_FTDC_OST_Unknown:
 		// 如果是撤单，也有可能出现这一条，如何过滤？
 		if (pIn->OrderSubmitStatus == THOST_FTDC_OSS_InsertSubmitted)
-			return ExecType::ExecNew;
+			return ExecType::ExecType_New;
 	case THOST_FTDC_OST_AllTraded:
 	case THOST_FTDC_OST_PartTradedQueueing:
-		return ExecType::ExecTrade;
+		return ExecType::ExecType_Trade;
 	case THOST_FTDC_OST_Touched:
 		if (pIn->OrderSubmitStatus == THOST_FTDC_OSS_InsertRejected)
-			return ExecType::ExecRejected;
+			return ExecType::ExecType_Rejected;
 	default:
-		return ExecType::ExecNew;
+		return ExecType::ExecType_New;
 	}
 }
 

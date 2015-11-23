@@ -59,21 +59,21 @@ ExecType ZTSM_2_ExecType(int In)
 	switch (In)
 	{
 	case ZTSM_NotSent:
-		return ExecType::ExecNew;
+		return ExecType::ExecType_New;
 	case ZTSM_New:
-		return ExecType::ExecNew;
+		return ExecType::ExecType_New;
 	case ZTSM_Illegal:
-		return ExecType::ExecRejected;
+		return ExecType::ExecType_Rejected;
 	case ZTSM_AllFilled:
 	case ZTSM_PartiallyFilled:
-		return ExecType::ExecTrade;
+		return ExecType::ExecType_Trade;
 	case ZTSM_AllCancelled:
 	case ZTSM_PartiallyCancelled:
-		return ExecType::ExecCancelled;
+		return ExecType::ExecType_Cancelled;
 	
-		return ExecType::ExecTrade;
+		return ExecType::ExecType_Trade;
 	default:
-		return ExecType::ExecNew;
+		return ExecType::ExecType_New;
 	}
 }
 
@@ -130,7 +130,7 @@ void CJLB_2_TradeField(CJLB_STRUCT* pIn, TradeField* pOut)
 	pOut->Commission = pIn->YJ_ + pIn->YHS_ + pIn->GHF_ + pIn->CJF_;
 
 	pOut->OpenClose = pOut->Side == OrderSide::OrderSide_Buy ? OpenCloseType::OpenCloseType_Open : OpenCloseType::OpenCloseType_Close;
-	pOut->HedgeFlag = HedgeFlagType::Speculation;
+	pOut->HedgeFlag = HedgeFlagType::HedgeFlagType_Speculation;
 	
 }
 
@@ -151,9 +151,9 @@ void WTLB_2_OrderField_0(WTLB_STRUCT* pIn, OrderField* pOut)
 	pOut->ExecType = ZTSM_2_ExecType(pIn->ZTSM_);
 
 	pOut->OpenClose = pOut->Side == OrderSide::OrderSide_Buy ? OpenCloseType::OpenCloseType_Open : OpenCloseType::OpenCloseType_Close;
-	pOut->HedgeFlag = HedgeFlagType::Speculation;
+	pOut->HedgeFlag = HedgeFlagType::HedgeFlagType_Speculation;
 
-	strcpy(pOut->Account, pIn->GDDM);
+	strcpy(pOut->AccountID, pIn->GDDM);
 
 	pOut->AvgPx = pIn->CJJG_;
 	pOut->CumQty = pIn->CJSL_;
@@ -231,7 +231,7 @@ void GFLB_2_PositionField(GFLB_STRUCT* pIn, PositionField* pOut)
 	pOut->Position = pIn->ZQSL_;
 	pOut->TdPosition = pIn->DJSL_;
 	pOut->YdPosition = pIn->KMSL_;
-	pOut->HedgeFlag = HedgeFlagType::Speculation;
+	pOut->HedgeFlag = HedgeFlagType::HedgeFlagType_Speculation;
 	strcpy(pOut->InstrumentID, pIn->ZQDM);
 	strcpy(pOut->Symbol, pIn->ZQDM);
 
