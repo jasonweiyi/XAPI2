@@ -39,30 +39,32 @@ void CTraderApi::QueryInThread(char type, void* pApi1, void* pApi2, double doubl
 	case E_ReqUserLoginField:
 		iRet = _ReqUserLogin(type, pApi1, pApi2, double1, double2, ptr1, size1, ptr2, size2, ptr3, size3);
 		break;
-	case E_QryOrderField:
-		iRet = _ReqQryOrder(type, pApi1, pApi2, double1, double2, ptr1, size1, ptr2, size2, ptr3, size3);
-		break;
-	case E_QryTradeField:
-		iRet = _ReqQryTrade(type, pApi1, pApi2, double1, double2, ptr1, size1, ptr2, size2, ptr3, size3);
-		break;
-	case E_QryInvestorField:
-		iRet = _ReqQryInvestor(type, pApi1, pApi2, double1, double2, ptr1, size1, ptr2, size2, ptr3, size3);
-		break;
 	case E_InputOrderField:
 		iRet = _ReqOrderInsert(type, pApi1, pApi2, double1, double2, ptr1, size1, ptr2, size2, ptr3, size3);
 		break;
 	case E_InputOrderActionField:
 		iRet = _ReqOrderAction(type, pApi1, pApi2, double1, double2, ptr1, size1, ptr2, size2, ptr3, size3);
 		break;
-	case E_QryTradingAccountField:
-		iRet = _ReqQryTradingAccount(type, pApi1, pApi2, double1, double2, ptr1, size1, ptr2, size2, ptr3, size3);
-		break;
-	case E_QryInvestorPositionField:
-		iRet = _ReqQryInvestorPosition(type, pApi1, pApi2, double1, double2, ptr1, size1, ptr2, size2, ptr3, size3);
-		break;
 	case E_QryDepthMarketDataField:
 		iRet = _Subscribe(type, pApi1, pApi2, double1, double2, ptr1, size1, ptr2, size2, ptr3, size3);
 		break;
+
+	case QueryType::ReqQryOrder :
+		iRet = _ReqQryOrder(type, pApi1, pApi2, double1, double2, ptr1, size1, ptr2, size2, ptr3, size3);
+		break;
+	case QueryType::ReqQryTrade:
+		iRet = _ReqQryTrade(type, pApi1, pApi2, double1, double2, ptr1, size1, ptr2, size2, ptr3, size3);
+		break;
+	case QueryType::ReqQryInvestor:
+		iRet = _ReqQryInvestor(type, pApi1, pApi2, double1, double2, ptr1, size1, ptr2, size2, ptr3, size3);
+		break;
+	case QueryType::ReqQryTradingAccount:
+		iRet = _ReqQryTradingAccount(type, pApi1, pApi2, double1, double2, ptr1, size1, ptr2, size2, ptr3, size3);
+		break;
+	case QueryType::ReqQryInvestorPosition:
+		iRet = _ReqQryInvestorPosition(type, pApi1, pApi2, double1, double2, ptr1, size1, ptr2, size2, ptr3, size3);
+		break;
+	
 	default:
 		break;
 	}
@@ -161,18 +163,15 @@ void CTraderApi::TestInThread(char type, void* pApi1, void* pApi2, double double
 
 void CTraderApi::OutputQueryTime(time_t t, double db, const char* szSource)
 {
-	ErrorField* pField = (ErrorField*)m_msgQueue->new_block(sizeof(ErrorField));
+	LogField* pField = (LogField*)m_msgQueue->new_block(sizeof(LogField));
 
-	pField->RawErrorID = 0;
-	sprintf(pField->ErrorMsg, "Add:%d,Time:%s", (int)db, ctime(&t));
-	strcpy(pField->Source, szSource);
+	sprintf(pField->Message, "Source:%s,Add:%d,Time:%s", szSource,(int)db, ctime(&t));
 
 	// 去了最后的回车
-	int len = strlen(pField->ErrorMsg);
-	pField->ErrorMsg[len - 1] = 0;
+	int len = strlen(pField->Message);
+	pField->Message[len - 1] = 0;
 	
-
-	m_msgQueue->Input_NoCopy(ResponeType::OnRtnError, m_msgQueue, m_pClass, true, 0, pField, sizeof(ErrorField), nullptr, 0, nullptr, 0);
+	m_msgQueue->Input_NoCopy(ResponeType::OnLog, m_msgQueue, m_pClass, true, 0, pField, sizeof(LogField), nullptr, 0, nullptr, 0);
 }
 
 
@@ -300,9 +299,15 @@ int CTraderApi::_ReqUserLogin(char type, void* pApi1, void* pApi2, double double
 	return 0;
 }
 
+void CTraderApi::ReqQuery(QueryType type, ReqQueryField* pQuery)
+{
+	m_msgQueue_Query->Input_Copy(type, m_msgQueue_Query, this, 0, 0,
+		pQuery, sizeof(ReqQueryField), nullptr, 0, nullptr, 0);
+}
+
 void CTraderApi::ReqQryInvestor()
 {
-	m_msgQueue_Query->Input_NoCopy(RequestType::E_QryInvestorField, m_msgQueue_Query, this, 0, 0,
+	m_msgQueue_Query->Input_NoCopy(QueryType::ReqQryInvestor, m_msgQueue_Query, this, 0, 0,
 		nullptr, 0, nullptr, 0, nullptr, 0);
 }
 
@@ -409,7 +414,7 @@ bool CTraderApi::IsErrorRspInfo(const char* szSource, Error_STRUCT *pRspInfo)
 		ErrorField* pField = (ErrorField*)m_msgQueue->new_block(sizeof(ErrorField));
 
 		pField->RawErrorID = pRspInfo->ErrCode;
-		strcpy(pField->ErrorMsg, pRspInfo->ErrInfo);
+		strcpy(pField->Text, pRspInfo->ErrInfo);
 		strcpy(pField->Source, szSource);
 
 		m_msgQueue->Input_NoCopy(ResponeType::OnRtnError, m_msgQueue, m_pClass, true, 0, pField, sizeof(ErrorField), nullptr, 0, nullptr, 0);
@@ -720,7 +725,7 @@ int CTraderApi::_ReqOrderAction(char type, void* pApi1, void* pApi2, double doub
 
 void CTraderApi::ReqQryOrder()
 {
-	m_msgQueue_Query->Input_NoCopy(RequestType::E_QryOrderField, m_msgQueue_Query, this, 0, 0,
+	m_msgQueue_Query->Input_NoCopy(QueryType::ReqQryOrder, m_msgQueue_Query, this, 0, 0,
 		nullptr, 0, nullptr, 0, nullptr, 0);
 }
 
@@ -918,7 +923,7 @@ int CTraderApi::_ReqQryOrder(char type, void* pApi1, void* pApi2, double double1
 
 void CTraderApi::ReqQryTrade()
 {
-	m_msgQueue_Query->Input_NoCopy(RequestType::E_QryTradeField, m_msgQueue_Query, this, 0, 0,
+	m_msgQueue_Query->Input_NoCopy(QueryType::ReqQryTrade, m_msgQueue_Query, this, 0, 0,
 		nullptr, 0, nullptr, 0, nullptr, 0);
 }
 
@@ -1197,16 +1202,16 @@ int CTraderApi::_ReqQryTrade(char type, void* pApi1, void* pApi2, double double1
 	return 0;
 }
 
-void CTraderApi::ReqQryInstrument(const string& szInstrumentId, const string& szExchange)
-{
+//void CTraderApi::ReqQryInstrument(const string& szInstrumentId, const string& szExchange)
+//{
+//
+//}
 
-}
-
-void CTraderApi::ReqQryTradingAccount()
-{
-	m_msgQueue_Query->Input_NoCopy(RequestType::E_QryTradingAccountField, m_msgQueue_Query, this, 0, 0,
-		nullptr, 0, nullptr, 0, nullptr, 0);
-}
+//void CTraderApi::ReqQryTradingAccount()
+//{
+//	m_msgQueue_Query->Input_NoCopy(QueryType::ReqQryTrade, m_msgQueue_Query, this, 0, 0,
+//		nullptr, 0, nullptr, 0, nullptr, 0);
+//}
 
 int CTraderApi::_ReqQryTradingAccount(char type, void* pApi1, void* pApi2, double double1, double double2, void* ptr1, int size1, void* ptr2, int size2, void* ptr3, int size3)
 {
@@ -1238,10 +1243,10 @@ int CTraderApi::_ReqQryTradingAccount(char type, void* pApi1, void* pApi2, doubl
 		ZJYE_2_AccountField(ppRS[i], pField);
 
 		// 可能资金账号查不出来，手工填上
-		if (strlen(pField->Account) <= 0)
+		if (strlen(pField->AccountID) <= 0)
 		{
 			// 多账户会有问题
-			strcpy(pField->Account, m_pApi->GetAccount());
+			strcpy(pField->AccountID, m_pApi->GetAccount());
 		}
 
 		m_msgQueue->Input_NoCopy(ResponeType::OnRspQryTradingAccount, m_msgQueue, m_pClass, i == count - 1, 0, pField, sizeof(AccountField), nullptr, 0, nullptr, 0);
@@ -1253,11 +1258,11 @@ int CTraderApi::_ReqQryTradingAccount(char type, void* pApi1, void* pApi2, doubl
 	return 0;
 }
 
-void CTraderApi::ReqQryInvestorPosition()
-{
-	m_msgQueue_Query->Input_NoCopy(RequestType::E_QryInvestorPositionField, m_msgQueue_Query, this, 0, 0,
-		nullptr, 0, nullptr, 0, nullptr, 0);
-}
+//void CTraderApi::ReqQryInvestorPosition()
+//{
+//	m_msgQueue_Query->Input_NoCopy(RequestType::E_QryInvestorPositionField, m_msgQueue_Query, this, 0, 0,
+//		nullptr, 0, nullptr, 0, nullptr, 0);
+//}
 
 int CTraderApi::_ReqQryInvestorPosition(char type, void* pApi1, void* pApi2, double double1, double double2, void* ptr1, int size1, void* ptr2, int size2, void* ptr3, int size3)
 {

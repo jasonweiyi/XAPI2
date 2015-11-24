@@ -106,7 +106,7 @@ namespace QuantBox
         Undefined,
     };
 
-    public enum Loglevel : byte
+    public enum LogLevel : byte
     {
         Trace,
         Debug,
@@ -141,6 +141,10 @@ namespace QuantBox
     {
         Buy,
         Sell,
+        Creation,	///申购
+        Redemption,	///赎回
+        Merge,		///合并
+        Split,		///拆分
     };
 
     public enum OrderType : byte
@@ -178,17 +182,17 @@ namespace QuantBox
 
     public enum ExecType : byte
     {
-        ExecNew,
-        ExecStopped,
-        ExecRejected,
-        ExecExpired,
-        ExecTrade,
-        ExecPendingCancel,
-        ExecCancelled,
-        ExecCancelReject,
-        ExecPendingReplace,
-        ExecReplace,
-        ExecReplaceReject,
+        New,
+        Stopped,
+        Rejected,
+        Expired,
+        Trade,
+        PendingCancel,
+        Cancelled,
+        CancelReject,
+        PendingReplace,
+        Replace,
+        ReplaceReject,
     };
 
     public enum OpenCloseType : byte
@@ -203,6 +207,7 @@ namespace QuantBox
         Speculation,
         Arbitrage,
         Hedge,
+        Covered,
         MarketMaker,
     };
 
@@ -222,20 +227,20 @@ namespace QuantBox
 
     public enum IdCardType : byte
     {
-        EID,				///组织机构代码
+        EID,			///组织机构代码
         IDCard,			///中国公民身份证
         Passport,		///护照
         LicenseNo,		///营业执照号
         TaxNo,			///税务登记号/当地纳税ID
         DrivingLicense,	///驾照
         SocialID,		///当地社保ID
-        LocalID,			///当地身份证
+        LocalID,		///当地身份证
         OtherCard,		///其他证件
     };
 
     public enum ExchangeType : byte
     {
-        Undefined,	/// 未定义
+        Undefined,	    /// 未定义
         SHFE,			/// 上期所
         DCE,			/// 大商所
         CZCE,			/// 郑商所
@@ -247,6 +252,37 @@ namespace QuantBox
         NEEQ,			/// 全国中小企业股份转让系统,三板
         HKEx,			/// 港交所
     };
+
+    ///合约生命周期状态类型
+    public enum InstLifePhaseType : byte
+    {
+        NotStart,		///未上市
+        Started,		///上市
+        Pause,		///停牌
+        Expired,		///到期
+
+        Issue,		///发行,参考于XSpeed
+        FirstList,	///首日上市,参考于XSpeed
+        UnList,		///退市,参考于XSpeed
+    };
+
+
+    ///交易阶段类型
+    public enum TradingPhaseType : byte
+    {
+        BeforeTrading,		///开盘前
+        NoTrading,			///非交易
+        Continuous,		///连续交易
+        AuctionOrdering,	///集合竞价报单
+        AuctionBalance,	///集合竞价价格平衡
+        AuctionMatch,		///集合竞价撮合
+        Closed,			///收盘
+        Suspension,		///停牌时段,参考于LTS
+        Fuse,				///熔断时段,参考于LTS
+    };
+
+
+
 
 
     /// <summary>
@@ -275,13 +311,6 @@ namespace QuantBox
         Level2Snapshot,
         Level2Update,
     };
-
-    
-
-    
-
-
-
 
     /// <summary>
     /// 

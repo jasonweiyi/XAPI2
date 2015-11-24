@@ -8,6 +8,7 @@ namespace QuantBox.XAPI
 {
     public delegate void DelegateOnConnectionStatus(object sender, ConnectionStatus status, [In] ref RspUserLoginField userLogin, int size1);
     public delegate void DelegateOnRtnError(object sender, [In] ref ErrorField error);
+    public delegate void DelegateOnLog(object sender, [In] ref LogField log);
 
     public delegate void DelegateOnRtnDepthMarketData(object sender, [In]ref DepthMarketDataNClass marketData);
     public delegate void DelegateOnRtnQuoteRequest(object sender, [In]ref QuoteRequestField quoteRequest);

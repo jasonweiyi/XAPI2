@@ -1,6 +1,7 @@
 #ifndef _QUEUE_ENUM_H_
 #define _QUEUE_ENUM_H_
 
+/// 基本请求
 enum RequestType :char
 {
 	GetApiType = 0,
@@ -28,29 +29,36 @@ enum RequestType :char
 	ReqQuoteInsert,
 	ReqOrderAction,
 	ReqQuoteAction,
+};
+
+///查询
+enum QueryType :char
+{
+	ReqQryInstrument = 32,
+	ReqQryTradingAccount,
+	ReqQryInvestorPosition,
 
 	ReqQryOrder,
 	ReqQryTrade,
+	ReqQryQuote,
 
-	ReqQryInstrument,
-	ReqQryTradingAccount,
-	ReqQryInvestorPosition,
-	ReqQryInvestorPositionDetail,
 	ReqQryInstrumentCommissionRate,
 	ReqQryInstrumentMarginRate,
 	ReqQrySettlementInfo,
-	
+	ReqQryInvestor,
 
 	ReqQryHistoricalTicks,
 	ReqQryHistoricalBars,
-	ReqQryInvestor,
 };
 
+///响应
 enum ResponeType :char
 {
 	OnConnectionStatus = 64,
-	OnRtnDepthMarketData,
 	OnRtnError,
+	OnLog,
+
+	OnRtnDepthMarketData,
 	OnRspQryInstrument,
 	OnRspQryTradingAccount,
 	OnRspQryInvestorPosition,
@@ -67,5 +75,7 @@ enum ResponeType :char
 
 	OnFilterSubscribe,
 };
+
+// >=100表示API自定义
 
 #endif

@@ -73,6 +73,7 @@ namespace QuantBox.XAPI
             cls.LowerLimitPrice = obj.LowerLimitPrice;
             cls.PreSettlementPrice = obj.PreSettlementPrice;
             cls.PreOpenInterest = obj.PreOpenInterest;
+            cls.TradingPhase = obj.TradingPhase;
             //obj.BidCount;
 
             int size = Marshal.SizeOf(typeof(DepthField));

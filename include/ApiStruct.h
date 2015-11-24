@@ -3,6 +3,7 @@
 
 #include "ApiDataType.h"
 #include "ApiEnum.h"
+//#include "QueueEnum.h"
 
 #pragma pack(push,1)
 
@@ -11,43 +12,10 @@
 /// 1.由API直接提供有效值
 /// 2.计算出来的值，字段正好预留了此字段，可以直接填充，这样使用者就不需要定义自己的字段了
 
-///查询持仓
-struct ReqQryPositionField
+///查询持仓,查委托，查成交,查合约
+struct ReqQueryField
 {
-	/////合约名称
-	//InstrumentNameType	InstrumentName;
-	/////唯一符号
-	//SymbolType			Symbol;
-	///合约代码
-	InstrumentIDType	InstrumentID;
-	///交易所代码
-	ExchangeIDType		ExchangeID;
-	///客户号，多账号支持使用
-	IDChar32Type		ClientID;
-	///账号，证券中用于股东代码
-	IDChar32Type		AccountID;
-
-}
-
-///持仓
-struct PositionField
-{
-	///持仓方向
-	PositionSide	Side;
-	///总持仓
-	QtyType			Position;
-	///今持仓
-	QtyType			TdPosition;
-	///昨持仓
-	QtyType			YdPosition;
-	///投保
-	HedgeFlagType	HedgeFlag;
-	///持仓成本，可用来计算持仓均价
-	MoneyType		PositionCost;
-	///交易日
-	DateIntType		TradingDay;
-
-
+	/*QueryType			Type;*/
 	///合约名称
 	InstrumentNameType	InstrumentName;
 	///唯一符号
@@ -60,11 +28,86 @@ struct PositionField
 	IDChar32Type		ClientID;
 	///账号，证券中用于股东代码
 	IDChar32Type		AccountID;
+
+	///币种
+	CurrencyIDType		CurrencyID;
+
+	///开始日期
+	DateIntType			DateStart;
+	///结束日期
+	DateIntType			DateEnd;
+	///开始时间
+	TimeIntType			TimeStart;
+	///结束时间
+	TimeIntType			TimeEnd;
+
+	///交易所生成的ID，此字段可供比较报单先后。不同交易所可能出现相同OrderID
+	OrderIDType			ID;
+	OrderIDType			RefID;
+};
+
+///持仓
+struct PositionField
+{
+	///合约名称
+	InstrumentNameType	InstrumentName;
+	///唯一符号
+	SymbolType			Symbol;
+	///合约代码
+	InstrumentIDType	InstrumentID;
+	///交易所代码
+	ExchangeIDType		ExchangeID;
+	///客户号，多账号支持使用
+	IDChar32Type		ClientID;
+	///账号，证券中用于股东代码
+	IDChar32Type		AccountID;
+
+	///持仓方向
+	PositionSide	Side;
+	///投保
+	HedgeFlagType	HedgeFlag;
+	///交易日
+	DateIntType		Date;
+	///持仓成本，可用来计算持仓均价
+	MoneyType		PositionCost;
+
+	///总持仓=今持仓+昨持仓
+	QtyType			Position;
+	///今持仓=买卖+申赎
+	QtyType			TodayPosition;
+	///昨持仓,如果买卖、申赎成功了，历史就没有区别了
+	QtyType			HistoryPosition;
+	///昨日持仓冻结，要卖出时要先冻结
+	QtyType			HistoryFrozen;
+
+	///今日买卖持仓
+	QtyType			TodayBSPosition;
+	///今日买卖持仓冻结
+	QtyType			TodayBSFrozen;
+	///今日申赎持仓
+	QtyType			TodayPRPosition;
+	///今日申赎持仓冻结
+	QtyType			TodayPRFrozen;
 };
 
 ///做市商双向报价
 struct QuoteField
 {
+	///合约名称
+	InstrumentNameType	InstrumentName;
+	///唯一符号
+	SymbolType			Symbol;
+	///合约代码
+	InstrumentIDType	InstrumentID;
+	///交易所代码
+	ExchangeIDType		ExchangeID;
+	///客户号，多账号支持使用
+	IDChar32Type		ClientID;
+	///账号，证券中用于股东代码
+	IDChar32Type		AccountID;
+
+
+
 	QtyType			AskQty;
 	PriceType		AskPrice;
 	OpenCloseType	AskOpenClose;
@@ -78,20 +121,6 @@ struct QuoteField
 	OrderStatus		Status;
 	ExecType		ExecType;
 
-	
-
-	///合约名称
-	InstrumentNameType	InstrumentName;
-	///唯一符号
-	SymbolType			Symbol;
-	///合约代码
-	InstrumentIDType	InstrumentID;
-	///交易所代码
-	ExchangeIDType		ExchangeID;
-	///客户号，多账号支持使用
-	IDChar32Type		ClientID;
-	///账号，证券中用于股东代码
-	IDChar32Type		AccountID;
 
 	///询价编号
 	OrderIDType		QuoteReqID;
@@ -111,13 +140,13 @@ struct QuoteField
 };
 
 
-///查询委托
-struct ReqQryOrderField
+///委托，委托回报都是同一结构体
+struct OrderField
 {
-	/////合约名称
-	//InstrumentNameType	InstrumentName;
-	/////唯一符号
-	//SymbolType			Symbol;
+	///合约名称
+	InstrumentNameType	InstrumentName;
+	///唯一符号
+	SymbolType			Symbol;
 	///合约代码
 	InstrumentIDType	InstrumentID;
 	///交易所代码
@@ -127,20 +156,7 @@ struct ReqQryOrderField
 	///账号，证券中用于股东代码
 	IDChar32Type		AccountID;
 
-	///交易所生成的ID，此字段可供比较报单先后。不同交易所可能出现相同OrderID
-	OrderIDType			OrderID;
-	OrderIDType			RefID;
 
-	///开始时间
-	TimeIntType			TimeStart;
-	///结束时间
-	TimeIntType			TimeEnd;
-}
-
-
-///委托，委托回报都是同一结构体
-struct OrderField
-{
 	///订单方向
 	OrderSide		Side;
 	///数量
@@ -156,18 +172,6 @@ struct OrderField
 	///时间
 	TimeIntType		Time;
 
-	///唯一符号
-	SymbolType			Symbol;
-	///合约代码
-	InstrumentIDType	InstrumentID;
-	///交易所代码
-	ExchangeIDType		ExchangeID;
-	///合约名称，本来没有必要加的，但证券代码并不利于识别
-	InstrumentNameType	InstrumentName;
-	///客户号，多账号支持使用
-	IDChar32Type		ClientID;
-	///账号，证券中用于股东代码
-	IDChar32Type		AccountID;
 
 	///系统ID，其实是柜台ID，唯一
 	OrderIDType			ID;
@@ -211,13 +215,13 @@ struct OrderField
 };
 
 
-///查询成交
-struct ReqQryTradeField
+///成交回报
+struct TradeField
 {
-	/////合约名称，本来没有必要加的，但证券代码并不利于识别
-	//InstrumentNameType	InstrumentName;
-	/////唯一符号
-	//SymbolType			Symbol;
+	///合约名称
+	InstrumentNameType	InstrumentName;
+	///唯一符号
+	SymbolType			Symbol;
 	///合约代码
 	InstrumentIDType	InstrumentID;
 	///交易所代码
@@ -227,19 +231,7 @@ struct ReqQryTradeField
 	///账号，证券中用于股东代码
 	IDChar32Type		AccountID;
 
-	///交易所生成的ID
-	OrderIDType			TradeID;
-	OrderIDType			RefID;
 
-	///开始时间
-	TimeIntType			TimeStart;
-	///结束时间
-	TimeIntType			TimeEnd;
-}
-
-///成交回报
-struct TradeField
-{
 	///订单方向
 	OrderSide		Side;
 	///数量
@@ -255,18 +247,7 @@ struct TradeField
 	///时间
 	TimeIntType		Time;
 
-	///合约名称
-	InstrumentNameType	InstrumentName;
-	///唯一符号
-	SymbolType			Symbol;
-	///合约代码
-	InstrumentIDType	InstrumentID;
-	///交易所代码
-	ExchangeIDType		ExchangeID;
-	///客户号，多账号支持使用
-	IDChar32Type		ClientID;
-	///账号，证券中用于股东代码
-	IDChar32Type		AccountID;
+
 	
 	///所对应的Order的ID
 	OrderIDType		ID;
@@ -337,10 +318,18 @@ struct ErrorField
 	Int32Type		XErrorID;
 	///原始错误代码
 	Int32Type		RawErrorID;
-	// 消息来源
-	Char64Type	Source;
 	// 错误信息
-	Char256Type	ErrorMsg;
+	Char256Type		Text;
+	// 消息来源
+	Char64Type		Source;
+};
+
+///日志信息
+struct LogField
+{
+	LogLevel	Level;
+
+	Char256Type	Message;
 };
 
 
@@ -355,18 +344,18 @@ struct RspUserLoginField
 	TimeIntType		LoginTime;
 	///会话ID
 	SessionIDType	SessionID;
+	///用户账号
+	IDChar32Type	UserID;
+	///股东账号
+	IDChar32Type	AccountID;
+	///投资者名称
+	PartyNameType	InvestorName;
 	///XAPI中错误代码，转成统一的值后，应用程序可以直接用它进行判断
 	Int32Type		XErrorID;
 	///原始错误代码
 	Int32Type		RawErrorID;
 	///信息
 	Char256Type		Text;
-	///用户账号
-	IDChar32Type	UserID;
-	///股东账号
-	IDChar32Type	Account;
-	///投资者名称
-	PartyNameType	InvestorName;
 };
 
 
@@ -445,6 +434,21 @@ struct DepthField
 ///合约
 struct InstrumentField
 {
+	///合约名称
+	InstrumentNameType	InstrumentName;
+	///唯一符号
+	SymbolType			Symbol;
+	///合约代码
+	InstrumentIDType	InstrumentID;
+	///交易所代码
+	ExchangeIDType		ExchangeID;
+	///客户号，多账号支持使用
+	IDChar32Type		ClientID;
+	///账号，证券中用于股东代码
+	IDChar32Type		AccountID;
+	///合约在交易所的代码，个股期权交易代码会变化
+	InstrumentIDType	ExchangeInstID;
+
 	///合约类型
 	InstrumentType		Type;
 	///合约数量乘数
@@ -457,20 +461,6 @@ struct InstrumentField
 	PriceType			StrikePrice;
 	///期权类型
 	PutCall				OptionsType;
-	///合约名称
-	InstrumentNameType	InstrumentName;
-	///唯一符号
-	SymbolType			Symbol;
-	///合约代码
-	InstrumentIDType	InstrumentID;
-	///交易所代码
-	ExchangeIDType		ExchangeID;
-	///客户号，多账号支持使用
-	IDChar32Type		ClientID;
-	///账号，证券中用于股东代码
-	IDChar32Type		Account;
-	///合约在交易所的代码，个股期权交易代码会变化
-	InstrumentIDType	ExchangeInstID;
 
 	///产品代码
 	InstrumentIDType	ProductID;
@@ -487,9 +477,9 @@ struct AccountField
 	///客户号，多账号支持使用
 	IDChar32Type		ClientID;
 	///账号，证券中用于股东代码
-	IDChar32Type		Account;
+	IDChar32Type		AccountID;
 	///币种
-	CurrencyCodeType	CurrencyCode;
+	CurrencyIDType		CurrencyID;
 	///上次结算准备金
 	MoneyType			PreBalance;
 	///当前保证金总额
@@ -507,6 +497,8 @@ struct AccountField
 	MoneyType			Deposit;
 	///出金金额
 	MoneyType			Withdraw;
+	///可取资金
+	MoneyType			WithdrawQuota;
 
 	///冻结的过户费
 	MoneyType			FrozenTransferFee;
@@ -531,16 +523,16 @@ struct AccountField
 ///发给做市商的询价请求
 struct QuoteRequestField
 {
-	///交易日
-	DateIntType			TradingDay;
-	///询价时间
-	TimeIntType			QuoteTime;
 	///唯一符号
 	SymbolType			Symbol;
 	///合约代码
 	InstrumentIDType	InstrumentID;
 	///交易所代码
 	ExchangeIDType		ExchangeID;
+	///交易日
+	DateIntType			TradingDay;
+	///询价时间
+	TimeIntType			QuoteTime;
 	///询价编号
 	OrderIDType			QuoteID;
 };
@@ -570,13 +562,6 @@ struct InvestorField
 	///投资者名称
 	PartyNameType			InvestorName;
 };
-
-
-
-
-
-
-
 
 
 

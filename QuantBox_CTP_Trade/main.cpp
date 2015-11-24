@@ -16,7 +16,7 @@ void* __stdcall XRequest(char type, void* pApi1, void* pApi2, double double1, do
 	case GetApiType:
 		return (void*)(ApiType::ApiType_Trade | ApiType::ApiType_Instrument | ApiType::ApiType_Query);
 	case GetApiVersion:
-		return (void*)"0.3.0.20150407";
+		return (void*)"0.4.0.20151124";
 	case GetApiName:
 		return (void*)"CTP";
 	case Create:
@@ -47,17 +47,11 @@ void* __stdcall XRequest(char type, void* pApi1, void* pApi2, double double1, do
 		pApi->Disconnect();
 		break;
 	case ReqQryInstrument:
-		pApi->ReqQryInstrument((const char*)ptr1, (const char*)ptr2);
-		break;
 	case ReqQryInvestorPosition:
-		pApi->ReqQryInvestorPosition((const char*)ptr1, (const char*)ptr2);
-		break;
 	case ReqQryTradingAccount:
-		pApi->ReqQryTradingAccount();
+	case ReqQrySettlementInfo:
+		pApi->ReqQuery((QueryType)type, (ReqQueryField*)ptr1);
 		break;
-	//case ReqQrySettlementInfo:
-	//	pApi->ReqQrySettlementInfo((const char*)ptr1);
-	//	break;
 	case ReqOrderInsert:
 		if (double2 == 0)
 		{

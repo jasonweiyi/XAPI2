@@ -2,6 +2,7 @@
 
 #include "../include/CTP/ThostFtdcTraderApi.h"
 #include "../include/ApiStruct.h"
+#include "../include/QueueEnum.h"
 
 #ifdef _WIN64
 #pragma comment(lib, "../include/CTP/win64/thosttraderapi.lib")
@@ -31,7 +32,7 @@ class CTraderApi :
 	//请求数据包类型
 	enum RequestType
 	{
-		E_Init,
+		E_Init = 100,
 		E_ReqAuthenticateField,
 		E_ReqUserLoginField,
 		E_SettlementInfoConfirmField,
@@ -89,20 +90,21 @@ public:
 	int ReqQuoteAction(CThostFtdcQuoteField *pQuote, OrderIDType* pOutput);
 	int ReqQuoteAction(const string& szId, OrderIDType* pOutput);
 
-	void ReqQryTradingAccount();
-	void ReqQryInvestorPosition(const string& szInstrumentId, const string& szExchange);
-	//void ReqQryInvestorPositionDetail(const string& szInstrumentId);
-	void ReqQryInstrument(const string& szInstrumentId, const string& szExchange);
+	//void ReqQryTradingAccount();
+	//void ReqQryInvestorPosition(const string& szInstrumentId, const string& szExchange);
+	////void ReqQryInvestorPositionDetail(const string& szInstrumentId);
+	//void ReqQryInstrument(ReqQueryField* pQuery);
+	void ReqQuery(QueryType type,ReqQueryField* pQuery);
 	//void ReqQryInstrumentCommissionRate(const string& szInstrumentId);
 	//void ReqQryInstrumentMarginRate(const string& szInstrumentId,TThostFtdcHedgeFlagType HedgeFlag = THOST_FTDC_HF_Speculation);
 	//void ReqQryDepthMarketData(const string& szInstrumentId);
 	//void ReqQrySettlementInfo(const string& szTradingDay);
 
-	void ReqQryOrder();
-	void ReqQryTrade();
-	void ReqQryQuote();
+	//void ReqQryOrder();
+	//void ReqQryTrade();
+	//void ReqQryQuote();
 
-	void ReqQryInvestor();
+	//void ReqQryInvestor();
 
 private:
 	friend void* __stdcall Query(char type, void* pApi1, void* pApi2, double double1, double double2, void* ptr1, int size1, void* ptr2, int size2, void* ptr3, int size3);

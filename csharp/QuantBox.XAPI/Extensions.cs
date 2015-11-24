@@ -29,14 +29,14 @@ namespace QuantBox.XAPI
             return PInvokeUtility.GetUnicodeString(field.Text);
         }
 
-        public static string ErrorMsg([In]this ErrorField field)
+        public static string Text([In]this ErrorField field)
         {
-            return PInvokeUtility.GetUnicodeString(field.ErrorMsg);
+            return PInvokeUtility.GetUnicodeString(field.Text);
         }
 
-        public static string Source([In]this ErrorField field)
+        public static string Message([In]this LogField field)
         {
-            return PInvokeUtility.GetUnicodeString(field.Source);
+            return PInvokeUtility.GetUnicodeString(field.Message);
         }
 
         public static string InvestorName([In]this InvestorField field)
@@ -137,8 +137,8 @@ CZC
     {
         public static string ToFormattedString([In]this ErrorField field)
         {
-            return string.Format("[XErrorID={0};RawErrorID={1};ErrorMsg={2};Source={3}]",
-                field.XErrorID, field.RawErrorID, field.ErrorMsg(), field.Source());
+            return string.Format("[XErrorID={0};RawErrorID={1};Text={2};Source={3}]",
+                field.XErrorID, field.RawErrorID, field.Text(), field.Source);
         }
 
         public static string ToFormattedString([In]this OrderField field)
@@ -181,8 +181,8 @@ CZC
 
         public static string ToFormattedStringLong([In]this RspUserLoginField field)
         {
-            return string.Format("[TradingDay={0};LoginTime={1};SessionID={2};XErrorID={3};RawErrorID={4};Text={5};InvestorName={6}]",
-                field.TradingDay, field.LoginTime, field.SessionID, field.XErrorID, field.RawErrorID, field.Text(), field.InvestorName());
+            return string.Format("[TradingDay={0};LoginTime={1};SessionID={2};InvestorName={3};XErrorID={4};RawErrorID={5};Text={6}]",
+                field.TradingDay, field.LoginTime, field.SessionID, field.InvestorName(), field.XErrorID, field.RawErrorID, field.Text());
         }
 
         public static string ToFormattedStringShort([In]this RspUserLoginField field)
@@ -195,6 +195,23 @@ CZC
         {
             return string.Format("[TradingDay={0};InstrumentID={1};ExchangeID={2};QuoteID={3};QuoteTime={4}]",
                 field.TradingDay, field.InstrumentID, field.ExchangeID, field.QuoteID, field.QuoteTime);
+        }
+
+        public static string ToFormattedString([In]this InvestorField field)
+        {
+            return string.Format("[BrokerID={0};InvestorID={1};IdentifiedCardType={2},IdentifiedCardNo={3};InvestorName={4}]",
+                field.BrokerID, field.InvestorID, Enum<IdCardType>.ToString(field.IdentifiedCardType), field.IdentifiedCardNo, field.InvestorName());
+        }
+        public static string ToFormattedStringExchangeDateTime([In]this DepthMarketDataNClass field)
+        {
+            return string.Format("[TradingDay={0};ActionDay={1};UpdateTime={2},UpdateMillisec={3}]",
+                field.TradingDay, field.ActionDay, field.UpdateTime, field.UpdateMillisec);
+        }
+
+        public static string ToFormattedString([In]this LogField field)
+        {
+            return string.Format("[Level={0};Message={1}]",
+                Enum<LogLevel>.ToString(field.Level), field.Message());
         }
 
         public static string ToFormattedHeader([In]this TickField field)
@@ -238,15 +255,6 @@ CZC
                 date, field.Open, field.High, field.Low, field.Close, field.Volume, field.OpenInterest);
         }
 
-        public static string ToFormattedString([In]this InvestorField field)
-        {
-            return string.Format("[BrokerID={0};InvestorID={1};IdentifiedCardType={2},IdentifiedCardNo={3};InvestorName={4}]",
-                field.BrokerID, field.InvestorID, Enum<IdCardType>.ToString(field.IdentifiedCardType),field.IdentifiedCardNo, field.InvestorName());
-        }
-        public static string ToFormattedStringExchangeDateTime([In]this DepthMarketDataNClass field)
-        {
-            return string.Format("[TradingDay={0};ActionDay={1};UpdateTime={2},UpdateMillisec={3}]",
-                field.TradingDay, field.ActionDay, field.UpdateTime, field.UpdateMillisec);
-        }
+        
     }
 }

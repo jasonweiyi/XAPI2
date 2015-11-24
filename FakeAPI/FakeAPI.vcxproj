@@ -105,6 +105,7 @@
     </ClCompile>
     <ClCompile Include="StockDrv.cpp" />
     <ClCompile Include="ThostFtdcTraderApi.cpp" />
+    <ClCompile Include="ZQThostFtdcTraderApi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FakeAPI.rc" />

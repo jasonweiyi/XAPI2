@@ -14,6 +14,7 @@ namespace QuantBox.XAPI.Event
     {
         public new event EventHandler OnConnectionStatus;
         public new event EventHandler OnRtnError;
+        public new event EventHandler OnLog;
 
         public new event EventHandler OnRtnDepthMarketData;
         public new event EventHandler OnRtnQuoteRequest;
@@ -41,6 +42,7 @@ namespace QuantBox.XAPI.Event
         {
             base.OnConnectionStatus = OnConnectionStatus_callback;
             base.OnRtnError = OnRtnError_callback;
+            base.OnLog = OnLog_callback;
 
             base.OnRtnDepthMarketData = OnRtnDepthMarketData_callback;
             base.OnRtnQuoteRequest = OnRtnQuoteRequest_callback;
@@ -57,6 +59,7 @@ namespace QuantBox.XAPI.Event
             base.OnRspQryHistoricalBars = OnRspQryHistoricalBars_callback;
 
             base.OnRspQryInvestor = OnRspQryInvestor_callback;
+            
         }
 
         public void Show()
@@ -77,6 +80,14 @@ namespace QuantBox.XAPI.Event
             if (null != OnRtnError)
             {
                 OnRtnError(this, new OnRtnErrorEventArgs(ref error));
+            }
+        }
+
+        private void OnLog_callback(object sender, ref LogField log)
+        {
+            if (null != OnLog)
+            {
+                OnLog(this, new OnLogEventArgs(ref log));
             }
         }
 

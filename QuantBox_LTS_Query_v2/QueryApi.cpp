@@ -124,7 +124,7 @@ bool CQueryApi::IsErrorRspInfo(CSecurityFtdcRspInfoField *pRspInfo, int nRequest
 		ErrorField* pField = (ErrorField*)m_msgQueue->new_block(sizeof(ErrorField));
 
 		pField->RawErrorID = pRspInfo->ErrorID;
-		strcpy(pField->ErrorMsg, pRspInfo->ErrorMsg);
+		strcpy(pField->Text, pRspInfo->ErrorMsg);
 
 		m_msgQueue->Input_NoCopy(ResponeType::OnRtnError, m_msgQueue, m_pClass, bIsLast, 0, pField, sizeof(ErrorField), nullptr, 0, nullptr, 0);
 	}
@@ -725,7 +725,7 @@ void CQueryApi::OnRspQryTradingAccount(CSecurityFtdcTradingAccountField *pTradin
 		{
 			AccountField* pField = (AccountField*)m_msgQueue->new_block(sizeof(AccountField));
 
-			strcpy(pField->Account, pTradingAccount->AccountID);
+			strcpy(pField->AccountID, pTradingAccount->AccountID);
 			pField->PreBalance = pTradingAccount->PreBalance;
 			pField->CurrMargin = pTradingAccount->CurrMargin;
 			//pField->CloseProfit = pTradingAccount->CloseProfit;
@@ -802,8 +802,8 @@ void CQueryApi::OnRspQryInvestorPosition(CSecurityFtdcInvestorPositionField *pIn
 			}
 
 			pField->Position = pInvestorPosition->Position;
-			pField->TdPosition = pInvestorPosition->TodayPosition;
-			pField->YdPosition = pInvestorPosition->YdPosition;
+			pField->TodayPosition = pInvestorPosition->TodayPosition;
+			pField->HistoryPosition = pInvestorPosition->YdPosition;
 
 			// 等数据收集全了再遍历通知一次
 			if (bIsLast)
@@ -1105,28 +1105,28 @@ void CQueryApi::OnTrade(TradeField *pTrade, bool bFromQry)
 	if (pTrade->Side == OrderSide::OrderSide_Buy)
 	{
 		pField->Position += pTrade->Qty;
-		pField->TdPosition += pTrade->Qty;
+		pField->TodayPosition += pTrade->Qty;
 	}
 	else
 	{
 		pField->Position -= pTrade->Qty;
 		if (pTrade->OpenClose == OpenCloseType::OpenCloseType_CloseToday)
 		{
-			pField->TdPosition -= pTrade->Qty;
+			pField->TodayPosition -= pTrade->Qty;
 		}
 		else
 		{
-			pField->YdPosition -= pTrade->Qty;
+			pField->HistoryPosition -= pTrade->Qty;
 			// 如果昨天的被减成负数，从今天开始继续减
-			if (pField->YdPosition<0)
+			if (pField->HistoryPosition<0)
 			{
-				pField->TdPosition += pField->YdPosition;
-				pField->YdPosition = 0;
+				pField->TodayPosition += pField->HistoryPosition;
+				pField->HistoryPosition = 0;
 			}
 		}
 
 		// 计算错误，直接重新查询
-		if (pField->Position < 0 || pField->TdPosition < 0 || pField->YdPosition < 0)
+		if (pField->Position < 0 || pField->TodayPosition < 0 || pField->HistoryPosition < 0)
 		{
 			ReqQryInvestorPosition("", "");
 			return;

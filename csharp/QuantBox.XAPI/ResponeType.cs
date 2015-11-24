@@ -9,14 +9,17 @@ namespace QuantBox.XAPI
     public enum ResponeType : byte
     {
         OnConnectionStatus = 64,
-        OnRtnDepthMarketData,
         OnRtnError,
+        OnLog,
+
+        OnRtnDepthMarketData,
         OnRspQryInstrument,
         OnRspQryTradingAccount,
         OnRspQryInvestorPosition,
         OnRspQrySettlementInfo,
         OnRtnOrder,
         OnRtnTrade,
+
         OnRtnQuote,
         OnRtnQuoteRequest,
 

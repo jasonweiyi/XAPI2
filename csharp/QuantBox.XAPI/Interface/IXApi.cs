@@ -11,9 +11,13 @@ namespace QuantBox.XAPI.Interface
     {
         DelegateOnConnectionStatus OnConnectionStatus { get; set; }
         DelegateOnRtnError OnRtnError { get; set; }
+        DelegateOnLog OnLog { get; set; }
+
 
         void Connect();
         void Disconnect();
+
+        void ReqQuery(QueryType type, ref ReqQueryField query);
 
         ApiType GetApiType { get;}
         string GetApiName { get;}
@@ -30,21 +34,27 @@ namespace QuantBox.XAPI.Interface
     public interface IXInstrument
     {
         DelegateOnRspQryInstrument OnRspQryInstrument { get; set; }
-        void ReqQryInstrument(string szInstrument, string szExchange);
+        //void ReqQryInstrument(string szInstrument, string szExchange);
     }
 
-    public interface IXTrade
+    public interface IXQuery
     {
         DelegateOnRspQryTradingAccount OnRspQryTradingAccount { get; set; }
         DelegateOnRspQryInvestorPosition OnRspQryInvestorPosition { get; set; }
         DelegateOnRspQrySettlementInfo OnRspQrySettlementInfo { get; set; }
+
+        //void ReqQryTradingAccount();
+        //void ReqQryInvestorPosition(string szInstrument, string szExchange);
+        //void ReqQrySettlementInfo(string szTradingDay);
+    }
+
+    public interface IXTrade
+    {
         DelegateOnRtnOrder OnRtnOrder { get; set; }
         DelegateOnRtnTrade OnRtnTrade { get; set; }
         DelegateOnRtnQuote OnRtnQuote { get; set; }
 
-        void ReqQryTradingAccount();
-        void ReqQryInvestorPosition(string szInstrument, string szExchange);
-        void ReqQrySettlementInfo(string szTradingDay);
+
         void SendOrder(ref OrderField[] orders, out string[] OrderRefs);
         void CancelOrder(string[] szId,out string[] errs);
         void SendQuote(ref QuoteField quote,out string AskRef,out string BidRef);
@@ -56,7 +66,7 @@ namespace QuantBox.XAPI.Interface
         DelegateOnRspQryHistoricalTicks OnRspQryHistoricalTicks { get; set; }
         DelegateOnRspQryHistoricalBars OnRspQryHistoricalBars { get; set; }
 
-        int ReqQryHistoricalTicks(ref HistoricalDataRequestField request);
-        int ReqQryHistoricalBars(ref HistoricalDataRequestField request);
+        //int ReqQryHistoricalTicks(ref HistoricalDataRequestField request);
+        //int ReqQryHistoricalBars(ref HistoricalDataRequestField request);
     }
 }

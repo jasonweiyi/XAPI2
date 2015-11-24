@@ -46,6 +46,18 @@ namespace QuantBox.XAPI.Callback
             }
         }
 
+        public void ReqQuery(QueryType type, ref ReqQueryField query)
+        {
+            int ReqQueryField_size = Marshal.SizeOf(typeof(ReqQueryField));
+            IntPtr ReqQueryField_Ptr = Marshal.AllocHGlobal(ReqQueryField_size);
+            Marshal.StructureToPtr(query, ReqQueryField_Ptr, false);
+
+            proxy.XRequest((byte)type, Handle, IntPtr.Zero, 0, 0,
+                ReqQueryField_Ptr, ReqQueryField_size, IntPtr.Zero, 0, IntPtr.Zero, 0);
+
+            Marshal.FreeHGlobal(ReqQueryField_Ptr);
+        }
+
         protected override IntPtr OnRespone(byte type, IntPtr pApi1, IntPtr pApi2, double double1, double double2, IntPtr ptr1, int size1, IntPtr ptr2, int size2, IntPtr ptr3, int size3)
         {
             switch ((ResponeType)type)

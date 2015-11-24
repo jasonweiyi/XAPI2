@@ -8,34 +8,231 @@ using System.Text;
 namespace QuantBox.XAPI
 {
     /// <summary>
-    /// 用户信息
+    /// 查询持仓,查委托，查成交
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-    public struct UserInfoField
+    public struct ReqQueryField
     {
-        /// <summary>
-        /// 用户代码
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        public string UserID;
-        /// <summary>
-        /// 密码
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 41)]
-        public string Password;
-        /// <summary>
-        /// 扩展信息，通达信中用来做通讯密码
-        /// </summary>
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        public byte[] InstrumentName;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string ExtInfoChar64;
-        /// <summary>
-        /// 扩展信息
-        /// </summary>
-        public int ExtInfoInt32;
+        public string Symbol;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
+        public string InstrumentID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
+        public string ExchangeID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string ClientID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string AccountID;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+        public string CurrencyID;
+
+        public int DateStart;
+        public int DateEnd;
+        public int TimeStart;
+        public int TimeEnd;
+
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string ID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string RefID;
+    }
+
+    ///持仓
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public struct PositionField
+    {
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        public byte[] InstrumentName;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string Symbol;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
+        public string InstrumentID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
+        public string ExchangeID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string ClientID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string AccountID;
+
+        public PositionSide Side;
+        public HedgeFlagType HedgeFlag;
+        public int Date;
+        public double PositionCost;
+        
+        public double Position;
+        public double TodayPosition;
+        public double HistoryPosition;
+        public double HistoryFrozen;
+
+        ///今日买卖持仓
+        public double TodayBSPosition;
+        ///今日买卖持仓冻结
+        public double TodayBSFrozen;
+        ///今日申赎持仓
+        public double TodayPRPosition;
+        ///今日申赎持仓冻结
+        public double TodayPRFrozen;
     }
 
     /// <summary>
-    /// 用户信息
+    /// 做市商双向报价
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public struct QuoteField
+    {
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        public byte[] InstrumentName;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string Symbol;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
+        public string InstrumentID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
+        public string ExchangeID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string ClientID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string AccountID;
+
+
+        public double AskQty;
+        public double AskPrice;
+        public OpenCloseType AskOpenClose;
+        public HedgeFlagType AskHedgeFlag;
+
+        public double BidQty;
+        public double BidPrice;
+        public OpenCloseType BidOpenClose;
+        public HedgeFlagType BidHedgeFlag;
+
+        public OrderStatus Status;
+        public ExecType ExecType;
+
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string QuoteReqID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string LocalID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string ID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string AskID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string BidID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string AskOrderID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string BidOrderID;
+
+        public int XErrorID;
+        public int RawErrorID;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
+        public byte[] Text;
+    }
+
+    /// <summary>
+    /// 订单信息
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public struct OrderField
+    {
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        public byte[] InstrumentName;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string Symbol;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
+        public string InstrumentID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
+        public string ExchangeID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string ClientID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string AccountID;
+
+
+        public OrderSide Side;
+        public double Qty;
+        public double Price;
+        public OpenCloseType OpenClose;
+        public HedgeFlagType HedgeFlag;
+        public int Date;
+        public int Time;
+
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string ID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string OrderID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string LocalID;
+
+
+        public OrderType Type;
+        public double StopPx;
+        public TimeInForce TimeInForce;
+
+        public OrderStatus Status;
+        public ExecType ExecType;
+        public double LeavesQty;
+        public double CumQty;
+        public double AvgPx;
+
+        public int XErrorID;
+        public int RawErrorID;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
+        public byte[] Text;
+
+        public int ReserveInt32;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string ReserveChar64;
+    }
+
+    /// <summary>
+    /// 成交回报
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public struct TradeField
+    {
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        public byte[] InstrumentName;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string Symbol;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
+        public string InstrumentID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
+        public string ExchangeID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string ClientID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string AccountID;
+
+        public OrderSide Side;
+        public double Qty;
+        public double Price;
+        public OpenCloseType OpenClose;
+        public HedgeFlagType HedgeFlag;
+        public int Date;
+        public int Time;
+
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string ID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string TradeID;
+
+        public double Commission;
+
+        public int ReserveInt32;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string ReserveChar64;
+    }
+
+
+    /// <summary>
+    /// 服务器信息
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
     public struct ServerInfoField
@@ -97,8 +294,37 @@ namespace QuantBox.XAPI
         public string ExtInfoChar128;
     }
 
+
     /// <summary>
-    /// 深度行情
+    /// 用户信息
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public struct UserInfoField
+    {
+        /// <summary>
+        /// 用户代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string UserID;
+        /// <summary>
+        /// 密码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 41)]
+        public string Password;
+        /// <summary>
+        /// 扩展信息，通达信中用来做通讯密码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string ExtInfoChar64;
+        /// <summary>
+        /// 扩展信息
+        /// </summary>
+        public int ExtInfoInt32;
+    }
+
+
+    /// <summary>
+    /// 错误信息
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
     public struct ErrorField
@@ -112,16 +338,35 @@ namespace QuantBox.XAPI
         /// </summary>
         public int RawErrorID;
         /// <summary>
+        /// 错误信息
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
+        public byte[] Text;
+        /// <summary>
         /// 信息来源
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-        public byte[] Source;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string Source;
+    }
+
+
+    /// <summary>
+    /// 日志信息
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public struct LogField
+    {
+        /// <summary>
+        /// 日志级别
+        /// </summary>
+        public LogLevel Level;
         /// <summary>
         /// 错误信息
         /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
-        public byte[] ErrorMsg;
+        public byte[] Message;
     }
+
 
     /// <summary>
     /// 登录回报
@@ -142,6 +387,23 @@ namespace QuantBox.XAPI
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string SessionID;
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string UserID;
+        /// <summary>
+        /// 
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string AccountID;
+        /// <summary>
+        /// 投资者名称
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 81)]
+        public byte[] InvestorName;
+
         /// <summary>
         /// 错误代码
         /// </summary>
@@ -155,21 +417,259 @@ namespace QuantBox.XAPI
         /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
         public byte[] Text;
+    }
+
+    
+
+    /// <summary>
+    /// DepthField行情
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public struct DepthField
+    {
+        public double Price;
+        public int Size;
+        public int Count;
+    }
+
+
+    /// <summary>
+    /// 合约信息
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public struct InstrumentField
+    {
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        public byte[] InstrumentName;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string Symbol;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
+        public string InstrumentID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
+        public string ExchangeID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string ClientID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string AccountID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
+        public string ExchangeInstID;
+
+
         /// <summary>
-        /// 
+        /// 类型
         /// </summary>
+        public InstrumentType Type;
+        /// <summary>
+        /// 合约数量乘数
+        /// </summary>
+        public int VolumeMultiple;
+        /// <summary>
+        /// 最小变动价位
+        /// </summary>
+        public double PriceTick;
+        /// <summary>
+        /// 到期日
+        /// </summary>
+        public int ExpireDate;
+
+        /// <summary>
+        /// 执行价
+        /// </summary>
+        public double StrikePrice;
+        /// <summary>
+        /// 期权类型
+        /// </summary>
+        public PutCall OptionsType;
+        /// <summary>
+        /// 产品代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
+        public string ProductID;
+        /// <summary>
+        /// 基础商品代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
+        public string UnderlyingInstrID;
+        ///合约生命周期状态
+        public InstLifePhaseType InstLifePhase;
+    }
+
+    /// <summary>
+    /// 账号
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public struct AccountField
+    {
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        public string UserID;
-        /// <summary>
-        /// 
-        /// </summary>
+        public string ClientID;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        public string Account;
+        public string AccountID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+        public string CurrencyID;
         /// <summary>
-        /// 投资者名称
+        /// 上次结算准备金
         /// </summary>
+        public double PreBalance;
+        /// <summary>
+        /// 当前保证金总额
+        /// </summary>
+        public double CurrMargin;
+        /// <summary>
+        /// 平仓盈亏
+        /// </summary>
+        public double CloseProfit;
+        /// <summary>
+        /// 持仓盈亏
+        /// </summary>
+        public double PositionProfit;
+        /// <summary>
+        /// 期货结算准备金
+        /// </summary>
+        public double Balance;
+        /// <summary>
+        /// 可用资金
+        /// </summary>
+        public double Available;
+        /// <summary>
+        /// 入金金额
+        /// </summary>
+        public double Deposit;
+        /// <summary>
+        /// 出金金额
+        /// </summary>
+        public double Withdraw;
+        /// <summary>
+        /// 可取资金
+        /// </summary>
+        public double WithdrawQuota;
+        /// <summary>
+        /// 冻结的过户费
+        /// </summary>
+        public double FrozenTransferFee;
+        /// <summary>
+        /// 冻结的印花税
+        /// </summary>
+        public double FrozenStampTax;
+        /// <summary>
+        /// 冻结的手续费
+        /// </summary>
+        public double FrozenCommission;
+        /// <summary>
+        /// 冻结的资金
+        /// </summary>
+        public double FrozenCash;
+        /// <summary>
+        /// 过户费
+        /// </summary>
+        public double TransferFee;
+        /// <summary>
+        /// 印花税
+        /// </summary>
+        public double StampTax;
+        /// <summary>
+        /// 手续费
+        /// </summary>
+        public double Commission;
+        /// <summary>
+        /// 资金差额
+        /// </summary>
+        public double CashIn;
+    }
+
+
+
+    /// <summary>
+    /// 发给做市商的询价请求
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public struct QuoteRequestField
+    {
+        /// <summary>
+        /// 合约代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string Symbol;
+        /// <summary>
+        /// 合约代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
+        public string InstrumentID;
+        /// <summary>
+        /// 交易所代码
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
+        public string ExchangeID;
+        /// <summary>
+        /// 交易日
+        /// </summary>
+        public int TradingDay;
+        /// <summary>
+        /// 询价时间
+        /// </summary>
+        public int QuoteTime;
+
+        /// <summary>
+        /// 询价编号
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string QuoteID;
+    }
+
+    /// <summary>
+    /// 结算信息
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public struct SettlementInfoField
+    {
+        public int Size;
+        /// <summary>
+        /// 交易日
+        /// </summary>
+        public int TradingDay;
+        ///// <summary>
+        ///// 消息正文
+        ///// </summary>
+        //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 501)]
+        //public byte[] Content;
+    }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public struct SettlementInfoClass
+    {
+        /// <summary>
+        /// 交易日
+        /// </summary>
+        public int TradingDay;
+        ///// <summary>
+        ///// 消息正文
+        ///// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 2)]
+        public string Content;
+    }
+
+    /// <summary>
+    /// 投资者
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public struct InvestorField
+    {
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string InvestorID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 11)]
+        public string BrokerID;
+        public IdCardType IdentifiedCardType;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 51)]
+        public string IdentifiedCardNo;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 81)]
         public byte[] InvestorName;
+    }
+
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public struct OrderIDType
+    {
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string ID;
     }
 
     /// <summary>
@@ -266,437 +766,12 @@ namespace QuantBox.XAPI
         /// </summary>
         public double PreOpenInterest;
 
-        ///证券状态
-        ///TZQThostFtdcStatusFlagType	SecurityStatusFlag;
-        
+        ///交易阶段类型
+        public TradingPhaseType TradingPhase;
 
         ///买档个数
         public int BidCount;
     }
-
-    /// <summary>
-    /// DepthField行情
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-    public struct DepthField
-    {
-        public double Price;
-        public int Size;
-        public int Count;
-    }
-
-    /// <summary>
-    /// 发给做市商的询价请求
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-    public struct QuoteRequestField
-    {
-        /// <summary>
-        /// 交易日
-        /// </summary>
-        public int TradingDay;
-        /// <summary>
-        /// 询价时间
-        /// </summary>
-        public int QuoteTime;
-
-        /// <summary>
-        /// 合约代码
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string Symbol;
-        /// <summary>
-        /// 合约代码
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
-        public string InstrumentID;
-        /// <summary>
-        /// 交易所代码
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
-        public string ExchangeID;
-
-        /// <summary>
-        /// 询价编号
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string QuoteID;
-
-    }
-
-    /// <summary>
-    /// 合约信息
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-    public struct InstrumentField
-    {
-        /// <summary>
-        /// 类型
-        /// </summary>
-        public InstrumentType Type;
-        /// <summary>
-        /// 合约数量乘数
-        /// </summary>
-        public int VolumeMultiple;
-        /// <summary>
-        /// 最小变动价位
-        /// </summary>
-        public double PriceTick;
-        /// <summary>
-        /// 到期日
-        /// </summary>
-        public int ExpireDate;
-
-        /// <summary>
-        /// 执行价
-        /// </summary>
-        public double StrikePrice;
-        /// <summary>
-        /// 期权类型
-        /// </summary>
-        public PutCall OptionsType;
-        /// <summary>
-        /// 合约代码
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string Symbol;
-        /// <summary>
-        /// 合约代码
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
-        public string InstrumentID;
-        /// <summary>
-        /// 交易所代码
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
-        public string ExchangeID;
-        /// <summary>
-        /// 合约名称
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-        public byte[] InstrumentName;
-        /// <summary>
-        /// 合约代码
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
-        public string ExchangeInstID;
-
-        /// <summary>
-        /// 产品代码
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
-        public string ProductID;
-        
-        /// <summary>
-        /// 基础商品代码
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
-        public string UnderlyingInstrID;
-
-        ///证券状态
-        ///TZQThostFtdcStatusFlagType	SecurityStatusFlag;
-    }
-
-    /// <summary>
-    /// 账号
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-    public struct AccountField
-    {
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        public string ClientID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        public string Account;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-        public string CurrencyCode;
-        /// <summary>
-        /// 上次结算准备金
-        /// </summary>
-        public double PreBalance;
-        /// <summary>
-        /// 当前保证金总额
-        /// </summary>
-        public double CurrMargin;
-        /// <summary>
-        /// 平仓盈亏
-        /// </summary>
-        public double CloseProfit;
-        /// <summary>
-        /// 持仓盈亏
-        /// </summary>
-        public double PositionProfit;
-        /// <summary>
-        /// 期货结算准备金
-        /// </summary>
-        public double Balance;
-        /// <summary>
-        /// 可用资金
-        /// </summary>
-        public double Available;
-        /// <summary>
-        /// 入金金额
-        /// </summary>
-        public double Deposit;
-        /// <summary>
-        /// 出金金额
-        /// </summary>
-        public double Withdraw;
-        /// <summary>
-        /// 冻结的过户费
-        /// </summary>
-        public double FrozenTransferFee;
-        /// <summary>
-        /// 冻结的印花税
-        /// </summary>
-        public double FrozenStampTax;
-        /// <summary>
-        /// 冻结的手续费
-        /// </summary>
-        public double FrozenCommission;
-        /// <summary>
-        /// 冻结的资金
-        /// </summary>
-        public double FrozenCash;
-        /// <summary>
-        /// 过户费
-        /// </summary>
-        public double TransferFee;
-        /// <summary>
-        /// 印花税
-        /// </summary>
-        public double StampTax;
-        /// <summary>
-        /// 手续费
-        /// </summary>
-        public double Commission;
-        /// <summary>
-        /// 资金差额
-        /// </summary>
-        public double CashIn;
-    }
-
-    /// <summary>
-    /// 账号
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-    public struct SettlementInfoField
-    {
-        public int Size;
-        /// <summary>
-        /// 交易日
-        /// </summary>
-        public int TradingDay;
-        ///// <summary>
-        ///// 消息正文
-        ///// </summary>
-        //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 501)]
-        //public byte[] Content;
-    }
-
-    /// <summary>
-    /// 订单信息
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-    public struct QuoteField
-    {
-        public double AskQty;
-        public double AskPrice;
-        public OpenCloseType AskOpenClose;
-        public HedgeFlagType AskHedgeFlag;
-
-        public double BidQty;
-        public double BidPrice;
-        public OpenCloseType BidOpenClose;
-        public HedgeFlagType BidHedgeFlag;
-
-        public OrderStatus Status;
-        public ExecType ExecType;
-        
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string Symbol;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
-        public string InstrumentID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
-        public string ExchangeID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-        public byte[] InstrumentName;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string ClientID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string Account;
-
-
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string QuoteReqID;
-
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string LocalID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string ID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string AskID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string BidID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string AskOrderID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string BidOrderID;
-
-        public int XErrorID;
-        public int RawErrorID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
-        public byte[] Text;
-    }
-
-    /// <summary>
-    /// 订单信息
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-    public struct OrderField
-    {
-        public OrderSide Side;
-        public double Qty;
-        public double Price;
-        public OpenCloseType OpenClose;
-        public HedgeFlagType HedgeFlag;
-        public int Date;
-        public int Time;
-
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string Symbol;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
-        public string InstrumentID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
-        public string ExchangeID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-        public byte[] InstrumentName;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string ClientID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string Account;
-
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string ID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string OrderID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string LocalID;
-        
-        
-        public OrderType Type;
-        public double StopPx;
-        public TimeInForce TimeInForce;
-
-        public OrderStatus Status;
-        public ExecType ExecType; 
-        public double LeavesQty;
-        public double CumQty;
-        public double AvgPx;
-        
-        public int XErrorID;
-        public int RawErrorID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
-        public byte[] Text;
-
-        public int ReserveInt32;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string ReserveChar64;
-    }
-
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-    public struct OrderIDType
-    {
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string ID;
-    }
-
-    /// <summary>
-    /// 订单信息
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-    public struct TradeField
-    {
-        /// <summary>
-        /// 合约代码
-        /// </summary>
-        public OrderSide Side;
-        public double Qty;
-        public double Price;
-        public OpenCloseType OpenClose;
-        public HedgeFlagType HedgeFlag;
-        public int Date;
-        public int Time;
-
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string Symbol;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
-        public string InstrumentID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
-        public string ExchangeID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-        public byte[] InstrumentName;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string ClientID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string Account;
-
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string ID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string TradeID;
-
-        public double Commission;
-
-        public int ReserveInt32;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string ReserveChar64;
-    }
-
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-    public struct PositionField
-    {
-        /// <summary>
-        /// 合约代码
-        /// </summary>
-        public PositionSide Side;
-        public double Position;
-        public double TdPosition;
-        public double YdPosition;
-        public HedgeFlagType HedgeFlag;
-        public double PositionCost;
-        public int TradingDay;
-
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string Symbol;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
-        public string InstrumentID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
-        public string ExchangeID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-        public byte[] InstrumentName;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string ClientID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string Account;
-    }
-
-    /// <summary>
-    /// 投资者
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-    public struct InvestorField
-    {
-        public IdCardType IdentifiedCardType;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        public string InvestorID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 11)]
-        public string BrokerID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 51)]
-        public string IdentifiedCardNo;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 81)]
-        public byte[] InvestorName;
-    }
-
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
     public class DepthMarketDataNClass
@@ -786,6 +861,9 @@ namespace QuantBox.XAPI
         /// 昨持仓量
         /// </summary>
         public double PreOpenInterest;
+
+        ///交易阶段类型
+        public TradingPhaseType TradingPhase;
 
         ///买档个数
         public DepthField[] Bids;

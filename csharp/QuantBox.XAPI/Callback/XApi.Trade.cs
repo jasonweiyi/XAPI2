@@ -10,26 +10,6 @@ namespace QuantBox.XAPI.Callback
 {
     public partial class XApi : IXTrade
     {
-        public DelegateOnRspQryTradingAccount OnRspQryTradingAccount
-        {
-            get { return OnRspQryTradingAccount_; }
-            set { OnRspQryTradingAccount_ = value; }
-        }
-        public DelegateOnRspQryInvestorPosition OnRspQryInvestorPosition
-        {
-            get { return OnRspQryInvestorPosition_; }
-            set { OnRspQryInvestorPosition_ = value; }
-        }
-        public DelegateOnRspQrySettlementInfo OnRspQrySettlementInfo
-        {
-            get { return OnRspQrySettlementInfo_; }
-            set { OnRspQrySettlementInfo_ = value; }
-        }
-        public DelegateOnRspQryInvestor OnRspQryInvestor
-        {
-            get { return OnRspQryInvestor_; }
-            set { OnRspQryInvestor_ = value; }
-        }
         public DelegateOnRtnOrder OnRtnOrder
         {
             get { return OnRtnOrder_; }
@@ -49,42 +29,6 @@ namespace QuantBox.XAPI.Callback
         private DelegateOnRtnOrder OnRtnOrder_;
         private DelegateOnRtnTrade OnRtnTrade_;
         private DelegateOnRtnQuote OnRtnQuote_;
-        private DelegateOnRspQryTradingAccount OnRspQryTradingAccount_;
-        private DelegateOnRspQryInvestorPosition OnRspQryInvestorPosition_;
-        private DelegateOnRspQrySettlementInfo OnRspQrySettlementInfo_;
-        private DelegateOnRspQryInvestor OnRspQryInvestor_;
-
-        private Dictionary<string, StringBuilder> dict = new Dictionary<string, StringBuilder>();
-
-        public void ReqQryTradingAccount()
-        {
-            proxy.XRequest((byte)RequestType.ReqQryTradingAccount, Handle, IntPtr.Zero, 0, 0,
-                IntPtr.Zero, 0, IntPtr.Zero, 0, IntPtr.Zero, 0);
-        }
-
-        public void ReqQryInvestorPosition(string szInstrument, string szExchange)
-        {
-            IntPtr szInstrumentPtr = Marshal.StringToHGlobalAnsi(szInstrument);
-            IntPtr szExchangePtr = Marshal.StringToHGlobalAnsi(szExchange);
-
-            proxy.XRequest((byte)RequestType.ReqQryInvestorPosition, Handle, IntPtr.Zero, 0, 0,
-                szInstrumentPtr, 0, szExchangePtr, 0, IntPtr.Zero, 0);
-
-            Marshal.FreeHGlobal(szInstrumentPtr);
-            Marshal.FreeHGlobal(szExchangePtr);
-        }
-
-        public void ReqQrySettlementInfo(string szTradingDay)
-        {
-            dict.Remove(szTradingDay);
-
-            IntPtr szTradingDayPtr = Marshal.StringToHGlobalAnsi(szTradingDay);
-
-            proxy.XRequest((byte)RequestType.ReqQrySettlementInfo, Handle, IntPtr.Zero, 0, 0,
-                szTradingDayPtr, 0, IntPtr.Zero, 0, IntPtr.Zero, 0);
-
-            Marshal.FreeHGlobal(szTradingDayPtr);
-        }
 
         public void SendOrder(ref OrderField[] orders,out string[] OrderRefs)
         {
@@ -207,46 +151,6 @@ namespace QuantBox.XAPI.Callback
 
             Marshal.FreeHGlobal(szIdPtr);
             Marshal.FreeHGlobal(OrderIDType_Ptr);
-        }
-
-        private void _OnRspQryTradingAccount(IntPtr ptr1, int size1, double double1)
-        {
-            if (OnRspQryTradingAccount_ == null)
-                return;
-
-            AccountField obj = PInvokeUtility.GetObjectFromIntPtr<AccountField>(ptr1);
-
-            OnRspQryTradingAccount_(this, ref obj, size1, double1 != 0);
-        }
-
-        private void _OnRspQryInvestorPosition(IntPtr ptr1, int size1, double double1)
-        {
-            if (OnRspQryInvestorPosition_ == null)
-                return;
-
-            PositionField obj = PInvokeUtility.GetObjectFromIntPtr<PositionField>(ptr1);
-
-            OnRspQryInvestorPosition_(this, ref obj, size1, double1 != 0);
-        }
-
-        private void _OnRspQrySettlementInfo(IntPtr ptr1, int size1, double double1)
-        {
-            if (OnRspQrySettlementInfo_ == null)
-                return;
-
-            SettlementInfoField obj = PInvokeUtility.GetObjectFromIntPtr<SettlementInfoField>(ptr1);
-
-            OnRspQrySettlementInfo_(this, ref obj, size1, double1 != 0);
-        }
-
-        private void _OnRspQryInvestor(IntPtr ptr1, int size1, double double1)
-        {
-            if (OnRspQryInvestor_ == null)
-                return;
-
-            InvestorField obj = PInvokeUtility.GetObjectFromIntPtr<InvestorField>(ptr1);
-
-            OnRspQryInvestor_(this, ref obj, size1, double1 != 0);
         }
 
         private void _OnRtnOrder(IntPtr ptr1, int size1)

@@ -216,7 +216,7 @@ void GDLB_2_InvestorField(GDLB_STRUCT* pIn, InvestorField* pOut)
 
 void ZJYE_2_AccountField(ZJYE_STRUCT* pIn, AccountField* pOut)
 {
-	strcpy(pOut->Account, pIn->ZJZH);
+	strcpy(pOut->AccountID, pIn->ZJZH);
 	//pIn->BZ;
 	pOut->Available = pIn->KYZJ_;
 
@@ -229,8 +229,8 @@ void GFLB_2_PositionField(GFLB_STRUCT* pIn, PositionField* pOut)
 {
 	pOut->Side = PositionSide::PositionSide_Long;
 	pOut->Position = pIn->ZQSL_;
-	pOut->TdPosition = pIn->DJSL_;
-	pOut->YdPosition = pIn->KMSL_;
+	pOut->TodayPosition = pIn->DJSL_;
+	pOut->HistoryPosition = pIn->KMSL_;
 	pOut->HedgeFlag = HedgeFlagType::HedgeFlagType_Speculation;
 	strcpy(pOut->InstrumentID, pIn->ZQDM);
 	strcpy(pOut->Symbol, pIn->ZQDM);

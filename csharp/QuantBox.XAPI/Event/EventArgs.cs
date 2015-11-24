@@ -29,6 +29,16 @@ namespace QuantBox.XAPI.Event
         }
     }
 
+    public class OnLogEventArgs : EventArgs
+    {
+        public readonly LogField log;
+
+        public OnLogEventArgs(ref LogField log)
+        {
+            this.log = log;
+        }
+    }
+
     public class OnRtnDepthMarketDataNEventArgs : EventArgs
     {
         public readonly DepthMarketDataNClass marketData;

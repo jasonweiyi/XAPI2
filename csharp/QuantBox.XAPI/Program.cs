@@ -66,7 +66,7 @@ namespace QuantBox.XAPI
 
         static void OnRtnError(object sender, ref ErrorField error)
         {
-            Console.WriteLine("BB" + error.XErrorID + error.RawErrorID + error.ErrorMsg());
+            Console.WriteLine("BB" + error.XErrorID + error.RawErrorID + error.Text());
         }
 
         static void OnRtnTrade(object sender, ref TradeField trade)
@@ -186,7 +186,8 @@ namespace QuantBox.XAPI
 
             Console.ReadKey();
 
-            api2.ReqQryInstrument("", "");
+            ReqQueryField query = default(ReqQueryField);
+            api2.ReqQuery(QueryType.ReqQryInstrument, ref query);
 
             Console.ReadKey();
 
@@ -211,7 +212,8 @@ namespace QuantBox.XAPI
 
             api.Connect();
             Thread.Sleep(10 * 1000);
-            api.ReqQryInstrument("", "");
+            ReqQueryField query = default(ReqQueryField);
+            api.ReqQuery(QueryType.ReqQryInstrument, ref query);
 
             Thread.Sleep(300 * 1000);
 
@@ -242,7 +244,8 @@ namespace QuantBox.XAPI
             api.Connect();
             Thread.Sleep(10 * 1000);
             //api.Subscribe("IF1502", "");
-            api.ReqQryInstrument("", "");
+            ReqQueryField query = default(ReqQueryField);
+            api.ReqQuery(QueryType.ReqQryInstrument, ref query);
 
             Thread.Sleep(300 * 1000);
 

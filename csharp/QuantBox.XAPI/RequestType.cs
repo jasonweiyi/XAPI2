@@ -33,20 +33,5 @@ namespace QuantBox.XAPI
         ReqQuoteInsert,
         ReqOrderAction,
         ReqQuoteAction,
-
-        ReqQryOrder,
-        ReqQryTrade,
-
-        ReqQryInstrument,
-        ReqQryTradingAccount,
-        ReqQryInvestorPosition,
-        ReqQryInvestorPositionDetail,
-        ReqQryInstrumentCommissionRate,
-        ReqQryInstrumentMarginRate,
-        ReqQrySettlementInfo,
-
-        ReqQryHistoricalTicks,
-        ReqQryHistoricalBars,
-        ReqQryInvestor,
     }
 }

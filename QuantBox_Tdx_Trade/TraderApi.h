@@ -3,6 +3,7 @@
 #include "../include/Tdx/TdxApi.h"
 #include "../include/ApiStruct.h"
 #include "../include/IDGenerator.h"
+#include "../include/QueueEnum.h"
 
 #ifdef _WIN64
 #pragma comment(lib, "../include/Tdx/win64/TdxApi.lib")
@@ -34,7 +35,7 @@ class CTraderApi
 	//请求数据包类型
 	enum RequestType
 	{
-		E_Init,
+		E_Init = 100,
 		E_ReqUserLoginField,
 		E_QryInvestorField,
 		E_InputOrderField,
@@ -92,10 +93,12 @@ public:
 	//int ReqQuoteAction(CThostFtdcQuoteField *pQuote);
 	////int ReqQuoteAction(const string& szId);
 
-	void ReqQryTradingAccount();
-	void ReqQryInvestorPosition();
+	void ReqQuery(QueryType type, ReqQueryField* pQuery);
+
+	//void ReqQryTradingAccount();
+	//void ReqQryInvestorPosition();
 	//void ReqQryInvestorPositionDetail(const string& szInstrumentId);
-	void ReqQryInstrument(const string& szInstrumentId, const string& szExchange);
+	//void ReqQryInstrument(const string& szInstrumentId, const string& szExchange);
 	//void ReqQryInstrumentCommissionRate(const string& szInstrumentId);
 	////void ReqQryInstrumentMarginRate(const string& szInstrumentId,TThostFtdcHedgeFlagType HedgeFlag = THOST_FTDC_HF_Speculation);
 	//void ReqQryDepthMarketData(const string& szInstrumentId);

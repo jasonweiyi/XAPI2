@@ -123,7 +123,7 @@ bool CTraderApi::IsErrorRspInfo(const char* szSource, CSecurityFtdcRspInfoField 
 		ErrorField* pField = (ErrorField*)m_msgQueue->new_block(sizeof(ErrorField));
 
 		pField->RawErrorID = pRspInfo->ErrorID;
-		strcpy(pField->ErrorMsg, pRspInfo->ErrorMsg);
+		strcpy(pField->Text, pRspInfo->ErrorMsg);
 		strcpy(pField->Source, szSource);
 
 		m_msgQueue->Input_NoCopy(ResponeType::OnRtnError, m_msgQueue, m_pClass, bIsLast, 0, pField, sizeof(ErrorField), nullptr, 0, nullptr, 0);
@@ -868,23 +868,23 @@ void CTraderApi::OnTrade(TradeField *pTrade, bool bFromQry)
 	if (pTrade->Side == OrderSide::OrderSide_Buy)
 	{
 		pField->Position += pTrade->Qty;
-		pField->TdPosition += pTrade->Qty;
+		pField->TodayPosition += pTrade->Qty;
 	}
 	else
 	{
 		pField->Position -= pTrade->Qty;
 		if (pTrade->OpenClose == OpenCloseType::OpenCloseType_CloseToday)
 		{
-			pField->TdPosition -= pTrade->Qty;
+			pField->TodayPosition -= pTrade->Qty;
 		}
 		else
 		{
-			pField->YdPosition -= pTrade->Qty;
+			pField->HistoryPosition -= pTrade->Qty;
 			// 如果昨天的被减成负数，从今天开始继续减
-			if (pField->YdPosition<0)
+			if (pField->HistoryPosition<0)
 			{
-				pField->TdPosition += pField->YdPosition;
-				pField->YdPosition = 0;
+				pField->TodayPosition += pField->HistoryPosition;
+				pField->HistoryPosition = 0;
 			}
 		}
 

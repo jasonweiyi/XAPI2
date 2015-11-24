@@ -100,6 +100,7 @@
     <Compile Include="Callback\XApi.QuoteRequest.cs" />
     <Compile Include="Callback\XApi.MarketData.cs" />
     <Compile Include="Callback\XApi.Instrument.cs" />
+    <Compile Include="Callback\XApi.Query.cs" />
     <Compile Include="Callback\XApi.Trade.cs" />
     <Compile Include="Delegate.cs" />
     <Compile Include="DllInvoke.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy.cs" />
     <Compile Include="RequestType.cs" />
+    <Compile Include="QueryType.cs" />
     <Compile Include="ResponeType.cs" />
     <Compile Include="SoInvoke.cs" />
     <Compile Include="Struct.cs" />

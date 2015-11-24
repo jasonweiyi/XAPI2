@@ -165,7 +165,7 @@ void X_ReqQryInstrument(void* pFun, void* pApi, char* szInstrument, char* szExch
 	if (pFun == nullptr || pApi == nullptr)
 		return;
 
-	((fnOnRespone)pFun)(RequestType::ReqQryInstrument, pApi, nullptr, 0, 0, szInstrument, 0, szExchange, 0, nullptr, 0);
+	((fnOnRespone)pFun)(QueryType::ReqQryInstrument, pApi, nullptr, 0, 0, szInstrument, 0, szExchange, 0, nullptr, 0);
 }
 
 void X_ReqQryInvestorPosition(void* pFun, void* pApi, char* szInstrument, char* szExchange)
@@ -173,7 +173,7 @@ void X_ReqQryInvestorPosition(void* pFun, void* pApi, char* szInstrument, char* 
 	if (pFun == nullptr || pApi == nullptr)
 		return;
 
-	((fnOnRespone)pFun)(RequestType::ReqQryInvestorPosition, pApi, nullptr, 0, 0, szInstrument, 0, szExchange, 0, nullptr, 0);
+	((fnOnRespone)pFun)(QueryType::ReqQryInvestorPosition, pApi, nullptr, 0, 0, szInstrument, 0, szExchange, 0, nullptr, 0);
 }
 
 void X_ReqQryTradingAccount(void* pFun, void* pApi)
@@ -181,7 +181,7 @@ void X_ReqQryTradingAccount(void* pFun, void* pApi)
 	if (pFun == nullptr || pApi == nullptr)
 		return;
 
-	((fnOnRespone)pFun)(RequestType::ReqQryTradingAccount, pApi, nullptr, 0, 0, nullptr, 0, nullptr, 0, nullptr, 0);
+	((fnOnRespone)pFun)(QueryType::ReqQryTradingAccount, pApi, nullptr, 0, 0, nullptr, 0, nullptr, 0, nullptr, 0);
 }
 
 void X_SendOrder(void* pFun, void* pApi, OrderField* pOrder, OrderIDType* pInOut, int count)

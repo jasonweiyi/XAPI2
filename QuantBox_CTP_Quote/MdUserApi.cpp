@@ -115,7 +115,7 @@ bool CMdUserApi::IsErrorRspInfo(const char* szSource, CThostFtdcRspInfoField *pR
 		ErrorField* pField = (ErrorField*)m_msgQueue->new_block(sizeof(ErrorField));
 
 		pField->RawErrorID = pRspInfo->ErrorID;
-		strcpy(pField->ErrorMsg, pRspInfo->ErrorMsg);
+		strcpy(pField->Text, pRspInfo->ErrorMsg);
 		strcpy(pField->Source, szSource);
 
 		m_msgQueue->Input_NoCopy(ResponeType::OnRtnError, m_msgQueue, m_pClass, bIsLast, 0, pField, sizeof(ErrorField), nullptr, 0, nullptr, 0);
