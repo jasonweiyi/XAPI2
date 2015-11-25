@@ -54,7 +54,7 @@ namespace QuantBox.XAPI
 
         }
 
-        static void OnRspQrySettlementInfo(object sender, ref SettlementInfoField settlementInfo, int size1, bool bIsLast)
+        static void OnRspQrySettlementInfo(object sender, ref SettlementInfoClass settlementInfo, int size1, bool bIsLast)
         {
 
         }

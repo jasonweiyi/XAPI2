@@ -17,17 +17,6 @@ namespace QuantBox.XAPI.Callback
         }
         private DelegateOnRspQryInstrument OnRspQryInstrument_;
         
-        //public void ReqQryInstrument(string szInstrument, string szExchange)
-        //{
-        //    IntPtr szInstrumentPtr = Marshal.StringToHGlobalAnsi(szInstrument);
-        //    IntPtr szExchangePtr = Marshal.StringToHGlobalAnsi(szExchange);
-
-        //    proxy.XRequest((byte)RequestType.ReqQryInstrument, Handle, IntPtr.Zero, 0, 0,
-        //        szInstrumentPtr, 0, szExchangePtr, 0, IntPtr.Zero, 0);
-
-        //    Marshal.FreeHGlobal(szInstrumentPtr);
-        //    Marshal.FreeHGlobal(szExchangePtr);
-        //}
 
         private void _OnRspQryInstrument(IntPtr ptr1,int size1, double double1)
         {

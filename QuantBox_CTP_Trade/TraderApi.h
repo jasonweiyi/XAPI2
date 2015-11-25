@@ -80,6 +80,7 @@ public:
 		OrderField* pOrder2);
 
 	int ReqOrderAction(OrderIDType* szIds, int count, OrderIDType* pOutput);
+	int ReqOrderAction(OrderField *pOrder, int count, OrderIDType* pOutput);
 	int ReqOrderAction(CThostFtdcOrderField *pOrder, int count, OrderIDType* pOutput);
 
 	char* ReqQuoteInsert(
@@ -127,14 +128,15 @@ private:
 	int _ReqQryTradingAccount(char type, void* pApi1, void* pApi2, double double1, double double2, void* ptr1, int size1, void* ptr2, int size2, void* ptr3, int size3);
 	int _ReqQryInvestorPosition(char type, void* pApi1, void* pApi2, double double1, double double2, void* ptr1, int size1, void* ptr2, int size2, void* ptr3, int size3);
 	int _ReqQryInvestor(char type, void* pApi1, void* pApi2, double double1, double double2, void* ptr1, int size1, void* ptr2, int size2, void* ptr3, int size3);
+	int _ReqQrySettlementInfo(char type, void* pApi1, void* pApi2, double double1, double double2, void* ptr1, int size1, void* ptr2, int size2, void* ptr3, int size3);
 
 	int _ReqQryOrder(char type, void* pApi1, void* pApi2, double double1, double double2, void* ptr1, int size1, void* ptr2, int size2, void* ptr3, int size3);
 	int _ReqQryTrade(char type, void* pApi1, void* pApi2, double double1, double double2, void* ptr1, int size1, void* ptr2, int size2, void* ptr3, int size3);
 	int _ReqQryQuote(char type, void* pApi1, void* pApi2, double double1, double double2, void* ptr1, int size1, void* ptr2, int size2, void* ptr3, int size3);
 
-	void OnOrder(CThostFtdcOrderField *pOrder);
-	void OnTrade(CThostFtdcTradeField *pTrade);
-	void OnQuote(CThostFtdcQuoteField *pQuote);
+	void OnOrder(CThostFtdcOrderField *pOrder, int nRequestID, bool bIsLast);
+	void OnTrade(CThostFtdcTradeField *pTrade, int nRequestID, bool bIsLast);
+	void OnQuote(CThostFtdcQuoteField *pQuote, int nRequestID, bool bIsLast);
 
 	void OnTrade(TradeField *pTrade);
 
@@ -193,7 +195,7 @@ private:
 	//virtual void OnRspQryDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
 
 	//请求查询投资者结算结果响应
-	//virtual void OnRspQrySettlementInfo(CThostFtdcSettlementInfoField *pSettlementInfo, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
+	virtual void OnRspQrySettlementInfo(CThostFtdcSettlementInfoField *pSettlementInfo, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
 
 	//其它
 	virtual void OnRspError(CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);

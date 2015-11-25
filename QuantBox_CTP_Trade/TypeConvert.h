@@ -34,3 +34,5 @@ InstrumentType CThostFtdcInstrumentField_2_InstrumentType(CThostFtdcInstrumentFi
 IdCardType TThostFtdcIdCardTypeType_2_IdCardType(TThostFtdcIdCardTypeType In);
 
 ExchangeType TThostFtdcExchangeIDType_2_ExchangeType(TThostFtdcExchangeIDType In);
+
+void CThostFtdcOrderField_2_OrderField_0(OrderIDType OrderID, CThostFtdcOrderField* pIn, OrderField* pOut);

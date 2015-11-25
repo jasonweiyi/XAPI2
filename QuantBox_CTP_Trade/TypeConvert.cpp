@@ -1,6 +1,8 @@
 ﻿#include "stdafx.h"
 #include "TypeConvert.h"
 
+#include <stdio.h>
+
 
 /// 类似于OpenQuant FIX一样的效果，插件层简单，基本不要做怎么计算或处理
 /// 对于一个单子的某个状态可能是这样的，新单，部分成交，完全成交
@@ -326,4 +328,27 @@ ExchangeType TThostFtdcExchangeIDType_2_ExchangeType(TThostFtdcExchangeIDType In
 	default:
 		return ExchangeType::ExchangeType_Undefined;
 	}
+}
+
+void CThostFtdcOrderField_2_OrderField_0(OrderIDType OrderID,CThostFtdcOrderField* pIn, OrderField* pOut)
+{
+	strcpy(pOut->ID, OrderID);
+	strcpy(pOut->LocalID, pOut->ID);
+	strcpy(pOut->InstrumentID, pIn->InstrumentID);
+	strcpy(pOut->ExchangeID, pIn->ExchangeID);
+	pOut->HedgeFlag = TThostFtdcHedgeFlagType_2_HedgeFlagType(pIn->CombHedgeFlag[0]);
+	pOut->Side = TThostFtdcDirectionType_2_OrderSide(pIn->Direction);
+	pOut->Price = pIn->LimitPrice;
+	pOut->StopPx = pIn->StopPrice;
+	strncpy(pOut->Text, pIn->StatusMsg, sizeof(Char256Type));
+	pOut->OpenClose = TThostFtdcOffsetFlagType_2_OpenCloseType(pIn->CombOffsetFlag[0]);
+	pOut->Status = CThostFtdcOrderField_2_OrderStatus(pIn);
+	pOut->Qty = pIn->VolumeTotalOriginal;
+	pOut->CumQty = pIn->VolumeTraded;
+	pOut->LeavesQty = pIn->VolumeTotal;
+	pOut->Type = CThostFtdcOrderField_2_OrderType(pIn);
+	pOut->TimeInForce = CThostFtdcOrderField_2_TimeInForce(pIn);
+	pOut->ExecType = CThostFtdcOrderField_2_ExecType(pIn);
+	strcpy(pOut->OrderID, pIn->OrderSysID);
+	strncpy(pOut->Text, pIn->StatusMsg, sizeof(Char256Type));
 }

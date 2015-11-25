@@ -96,5 +96,24 @@ namespace QuantBox.XAPI
 
             return cls;
         }
+
+        public static SettlementInfoClass GetSettlementInfoClass(IntPtr ptr)
+        {
+            SettlementInfoField obj = (SettlementInfoField)Marshal.PtrToStructure(ptr, typeof(SettlementInfoField));
+
+            SettlementInfoClass cls = new SettlementInfoClass();
+
+            int size = Marshal.SizeOf(typeof (SettlementInfoField));
+            IntPtr pContent = new IntPtr(ptr.ToInt64() + size);
+
+            cls.TradingDay = obj.TradingDay;
+
+            unsafe
+            {
+                cls.Content = new string((sbyte*)pContent, 0, obj.Size, encodingGB2312);
+            }
+
+            return cls;
+        }
     }
 }

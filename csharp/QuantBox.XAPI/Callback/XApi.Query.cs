@@ -31,10 +31,30 @@ namespace QuantBox.XAPI.Callback
             set { OnRspQryInvestor_ = value; }
         }
 
+        public DelegateOnRspQryOrder OnRspQryOrder
+        {
+            get { return OnRspQryOrder_; }
+            set { OnRspQryOrder_ = value; }
+        }
+
+        public DelegateOnRspQryTrade OnRspQryTrade
+        {
+            get { return OnRspQryTrade_; }
+            set { OnRspQryTrade_ = value; }
+        }
+        public DelegateOnRspQryQuote OnRspQryQuote
+        {
+            get { return OnRspQryQuote_; }
+            set { OnRspQryQuote_ = value; }
+        }
+
         private DelegateOnRspQryTradingAccount OnRspQryTradingAccount_;
         private DelegateOnRspQryInvestorPosition OnRspQryInvestorPosition_;
         private DelegateOnRspQrySettlementInfo OnRspQrySettlementInfo_;
         private DelegateOnRspQryInvestor OnRspQryInvestor_;
+        private DelegateOnRspQryOrder OnRspQryOrder_;
+        private DelegateOnRspQryTrade OnRspQryTrade_;
+        private DelegateOnRspQryQuote OnRspQryQuote_;
 
         private Dictionary<string, StringBuilder> dict = new Dictionary<string, StringBuilder>();
 
@@ -63,9 +83,8 @@ namespace QuantBox.XAPI.Callback
             if (OnRspQrySettlementInfo_ == null)
                 return;
 
-            SettlementInfoField obj = PInvokeUtility.GetObjectFromIntPtr<SettlementInfoField>(ptr1);
-
-            OnRspQrySettlementInfo_(this, ref obj, size1, double1 != 0);
+            SettlementInfoClass cls = PInvokeUtility.GetSettlementInfoClass(ptr1);
+            OnRspQrySettlementInfo_(this, ref cls, size1, double1 != 0);
         }
 
         private void _OnRspQryInvestor(IntPtr ptr1, int size1, double double1)
@@ -76,6 +95,36 @@ namespace QuantBox.XAPI.Callback
             InvestorField obj = PInvokeUtility.GetObjectFromIntPtr<InvestorField>(ptr1);
 
             OnRspQryInvestor_(this, ref obj, size1, double1 != 0);
+        }
+
+        private void _OnRspQryOrder(IntPtr ptr1, int size1, double double1)
+        {
+            if (OnRspQryOrder_ == null)
+                return;
+
+            OrderField obj = PInvokeUtility.GetObjectFromIntPtr<OrderField>(ptr1);
+
+            OnRspQryOrder_(this, ref obj, size1, double1 != 0);
+        }
+
+        private void _OnRspQryTrade(IntPtr ptr1, int size1, double double1)
+        {
+            if (OnRspQryTrade_ == null)
+                return;
+
+            TradeField obj = PInvokeUtility.GetObjectFromIntPtr<TradeField>(ptr1);
+
+            OnRspQryTrade_(this, ref obj, size1, double1 != 0);
+        }
+
+        private void _OnRspQryQuote(IntPtr ptr1, int size1, double double1)
+        {
+            if (OnRspQryQuote_ == null)
+                return;
+
+            QuoteField obj = PInvokeUtility.GetObjectFromIntPtr<QuoteField>(ptr1);
+
+            OnRspQryQuote_(this, ref obj, size1, double1 != 0);
         }
     }
 }

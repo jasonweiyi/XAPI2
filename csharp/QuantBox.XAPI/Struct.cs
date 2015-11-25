@@ -21,9 +21,9 @@ namespace QuantBox.XAPI
         public string InstrumentID;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
         public string ExchangeID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string ClientID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string AccountID;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
@@ -36,9 +36,11 @@ namespace QuantBox.XAPI
 
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string ID;
+        public string Char64ID;
+        public int Int32ID;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string RefID;
+        public string Char64RefID;
+        public int Int32RefID;
     }
 
     ///持仓
@@ -53,9 +55,9 @@ namespace QuantBox.XAPI
         public string InstrumentID;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
         public string ExchangeID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string ClientID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string AccountID;
 
         public PositionSide Side;
@@ -92,9 +94,9 @@ namespace QuantBox.XAPI
         public string InstrumentID;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
         public string ExchangeID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string ClientID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string AccountID;
 
 
@@ -147,9 +149,9 @@ namespace QuantBox.XAPI
         public string InstrumentID;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
         public string ExchangeID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string ClientID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string AccountID;
 
 
@@ -204,9 +206,9 @@ namespace QuantBox.XAPI
         public string InstrumentID;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
         public string ExchangeID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string ClientID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string AccountID;
 
         public OrderSide Side;
@@ -447,10 +449,12 @@ namespace QuantBox.XAPI
         public string InstrumentID;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 9)]
         public string ExchangeID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string ClientID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string AccountID;
+
+
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 31)]
         public string ExchangeInstID;
 

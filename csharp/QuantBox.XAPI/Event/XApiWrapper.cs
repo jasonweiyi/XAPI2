@@ -23,6 +23,11 @@ namespace QuantBox.XAPI.Event
         public new event EventHandler OnRspQryTradingAccount;
         public new event EventHandler OnRspQryInvestorPosition;
         public new event EventHandler OnRspQrySettlementInfo;
+
+        public new event EventHandler OnRspQryOrder;
+        public new event EventHandler OnRspQryTrade;
+        public new event EventHandler OnRspQryQuote;
+
         public new event EventHandler OnRtnOrder;
         public new event EventHandler OnRtnTrade;
         public new event EventHandler OnRtnQuote;
@@ -51,6 +56,11 @@ namespace QuantBox.XAPI.Event
             base.OnRspQryTradingAccount = OnRspQryTradingAccount_callback;
             base.OnRspQryInvestorPosition = OnRspQryInvestorPosition_callback;
             base.OnRspQrySettlementInfo = OnRspQrySettlementInfo_callback;
+
+            base.OnRspQryOrder = OnRspQryOrder_callback;
+            base.OnRspQryTrade = OnRspQryTrade_callback;
+            base.OnRspQryQuote = OnRspQryQuote_callback;
+
             base.OnRtnOrder = OnRtnOrder_callback;
             base.OnRtnTrade = OnRtnTrade_callback;
             base.OnRtnQuote = OnRtnQuote_callback;
@@ -130,13 +140,38 @@ namespace QuantBox.XAPI.Event
                 OnRspQryInvestorPosition(this, new OnRspQryInvestorPositionEventArgs(ref position, size1, bIsLast));
             }
         }
-        private void OnRspQrySettlementInfo_callback(object sender, ref SettlementInfoField settlementInfo, int size1, bool bIsLast)
+        private void OnRspQrySettlementInfo_callback(object sender, ref SettlementInfoClass settlementInfo, int size1, bool bIsLast)
         {
             if (null != OnRspQrySettlementInfo)
             {
                 OnRspQrySettlementInfo(this, new OnRspQrySettlementInfoEventArgs(ref settlementInfo, size1, bIsLast));
             }
         }
+
+        private void OnRspQryOrder_callback(object sender, ref OrderField order, int size1, bool bIsLast)
+        {
+            if (null != OnRspQryOrder)
+            {
+                OnRspQryOrder(this, new OnRspQryOrderEventArgs(ref order, size1, bIsLast));
+            }
+        }
+
+        private void OnRspQryTrade_callback(object sender, ref TradeField trade, int size1, bool bIsLast)
+        {
+            if (null != OnRspQryTrade)
+            {
+                OnRspQryTrade(this, new OnRspQryTradeEventArgs(ref trade, size1, bIsLast));
+            }
+        }
+
+        private void OnRspQryQuote_callback(object sender, ref QuoteField quote, int size1, bool bIsLast)
+        {
+            if (null != OnRspQryQuote)
+            {
+                OnRspQryQuote(this, new OnRspQryQuoteEventArgs(ref quote, size1, bIsLast));
+            }
+        }
+
         private void OnRtnOrder_callback(object sender, ref OrderField order)
         {
             if (null != OnRtnOrder)

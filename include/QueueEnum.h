@@ -63,10 +63,15 @@ enum ResponeType :char
 	OnRspQryTradingAccount,
 	OnRspQryInvestorPosition,
 	OnRspQrySettlementInfo,
+
+	OnRspQryOrder,
+	OnRspQryTrade,
+	OnRspQryQuote,
+
 	OnRtnOrder,
 	OnRtnTrade,
-
 	OnRtnQuote,
+
 	OnRtnQuoteRequest,
 
 	OnRspQryHistoricalTicks,

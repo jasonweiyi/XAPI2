@@ -86,7 +86,15 @@ namespace QuantBox.XAPI.Callback
                 case ResponeType.OnRtnQuote:
                     _OnRtnQuote(ptr1, size1);
                     break;
-
+                case ResponeType.OnRspQryOrder:
+                    _OnRspQryOrder(ptr1, size1, double1);
+                    break;
+                case ResponeType.OnRspQryTrade:
+                    _OnRspQryTrade(ptr1, size1, double1);
+                    break;
+                case ResponeType.OnRspQryQuote:
+                    _OnRspQryQuote(ptr1, size1, double1);
+                    break;
                 case ResponeType.OnRtnDepthMarketData:
                     _OnRtnDepthMarketData(ptr1,size1,double1);
                     break;

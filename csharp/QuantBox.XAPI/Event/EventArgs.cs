@@ -103,13 +103,55 @@ namespace QuantBox.XAPI.Event
 
     public class OnRspQrySettlementInfoEventArgs : EventArgs
     {
-        public readonly SettlementInfoField settlementInfo;
+        public readonly SettlementInfoClass settlementInfo;
         public readonly int size1;
         public readonly bool bIsLast;
 
-        public OnRspQrySettlementInfoEventArgs(ref SettlementInfoField settlementInfo, int size1, bool bIsLast)
+        public OnRspQrySettlementInfoEventArgs(ref SettlementInfoClass settlementInfo, int size1, bool bIsLast)
         {
             this.settlementInfo = settlementInfo;
+            this.size1 = size1;
+            this.bIsLast = bIsLast;
+        }
+    }
+
+    public class OnRspQryOrderEventArgs : EventArgs
+    {
+        public readonly OrderField order;
+        public readonly int size1;
+        public readonly bool bIsLast;
+
+        public OnRspQryOrderEventArgs(ref OrderField order, int size1, bool bIsLast)
+        {
+            this.order = order;
+            this.size1 = size1;
+            this.bIsLast = bIsLast;
+        }
+    }
+
+    public class OnRspQryTradeEventArgs : EventArgs
+    {
+        public readonly TradeField trade;
+        public readonly int size1;
+        public readonly bool bIsLast;
+
+        public OnRspQryTradeEventArgs(ref TradeField trade, int size1, bool bIsLast)
+        {
+            this.trade = trade;
+            this.size1 = size1;
+            this.bIsLast = bIsLast;
+        }
+    }
+
+    public class OnRspQryQuoteEventArgs : EventArgs
+    {
+        public readonly QuoteField quote;
+        public readonly int size1;
+        public readonly bool bIsLast;
+
+        public OnRspQryQuoteEventArgs(ref QuoteField quote, int size1, bool bIsLast)
+        {
+            this.quote = quote;
             this.size1 = size1;
             this.bIsLast = bIsLast;
         }

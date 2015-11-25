@@ -67,17 +67,7 @@ CZC
     {
         public static DateTime ExchangeDateTime([In]this DepthMarketDataNClass field)
         {
-            // 大商所夜盘时，ActionDay可能已经是指向的第二天
             int HH = field.UpdateTime / 10000;
-
-            // 这个功能写入到C层中
-            //if (HH > 20)
-            //{
-            //    if (field.ExchangeID.CompareTo("DCE") == 0)
-            //    {
-            //        return field.ExchangeDateTime_();
-            //    }
-            //}
 
             int mm = field.UpdateTime % 10000 / 100;
             int ss = field.UpdateTime % 100;
@@ -212,6 +202,20 @@ CZC
         {
             return string.Format("[Level={0};Message={1}]",
                 Enum<LogLevel>.ToString(field.Level), field.Message());
+        }
+
+        public static string ToFormattedString([In]this AccountField field)
+        {
+            return string.Format("[AccountID={0};CurrencyID={1};Balance={2};Available={3}]",
+                field.AccountID, field.CurrencyID, field.Balance, field.Available);
+        }
+
+        public static string ToFormattedString([In]this PositionField field)
+        {
+            return string.Format("[InstrumentID={0};ExchangeID={1};HedgeFlag={2};Side={3};"
+                + "Position={4};TodayPosition={5};HistoryPosition={6}]",
+                field.InstrumentID, field.ExchangeID, Enum<HedgeFlagType>.ToString(field.HedgeFlag), Enum<PositionSide>.ToString(field.Side),
+                field.Position, field.TodayPosition, field.HistoryPosition);
         }
 
         public static string ToFormattedHeader([In]this TickField field)

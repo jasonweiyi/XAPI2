@@ -132,7 +132,7 @@ namespace QuantBox.XAPI.Callback
             //if (OnRtnDepthMarketData_ == null)
             //    return;
             DepthMarketDataNClass cls = PInvokeUtility.GetDepthMarketDataNClass(ptr1);
-            OnRtnDepthMarketData(this, ref cls);
+            OnRtnDepthMarketData_(this, ref cls);
         }
 
         private bool _OnFilterSubscribe(double double1, int size1, int size2, int size3, IntPtr ptr1)

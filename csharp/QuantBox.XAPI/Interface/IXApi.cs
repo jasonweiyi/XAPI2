@@ -34,7 +34,6 @@ namespace QuantBox.XAPI.Interface
     public interface IXInstrument
     {
         DelegateOnRspQryInstrument OnRspQryInstrument { get; set; }
-        //void ReqQryInstrument(string szInstrument, string szExchange);
     }
 
     public interface IXQuery
@@ -43,9 +42,9 @@ namespace QuantBox.XAPI.Interface
         DelegateOnRspQryInvestorPosition OnRspQryInvestorPosition { get; set; }
         DelegateOnRspQrySettlementInfo OnRspQrySettlementInfo { get; set; }
 
-        //void ReqQryTradingAccount();
-        //void ReqQryInvestorPosition(string szInstrument, string szExchange);
-        //void ReqQrySettlementInfo(string szTradingDay);
+        DelegateOnRspQryOrder OnRspQryOrder { get; set; }
+        DelegateOnRspQryTrade OnRspQryTrade { get; set; }
+        DelegateOnRspQryQuote OnRspQryQuote { get; set; }
     }
 
     public interface IXTrade
