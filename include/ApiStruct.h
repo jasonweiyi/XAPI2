@@ -12,13 +12,13 @@
 /// 1.由API直接提供有效值
 /// 2.计算出来的值，字段正好预留了此字段，可以直接填充，这样使用者就不需要定义自己的字段了
 
-///查询持仓,查委托，查成交,查合约
+///查询持仓,查委托，查成交,查合约，查资金等
+///定义一个通用的结构，省事
 struct ReqQueryField
 {
-	/*QueryType			Type;*/
-	///合约名称
+	///合约名称，继续保留在这只是为了与其它结构体风格统一，一般底层不用它
 	InstrumentNameType	InstrumentName;
-	///唯一符号
+	///唯一符号，同样是为了风格统一，实际一般不用
 	SymbolType			Symbol;
 	///合约代码
 	InstrumentIDType	InstrumentID;
@@ -41,15 +41,22 @@ struct ReqQueryField
 	///结束时间
 	TimeIntType			TimeEnd;
 
-	///交易所生成的ID，此字段可供比较报单先后。不同交易所可能出现相同OrderID
-	OrderIDType			ID;
-	OrderIDType			RefID;
+	///一般是指定查询时使用
+	OrderIDType			Char64ID;
+	Int32Type			Int32ID;
+
+	///一般是由API底层查询预留
+	OrderIDType			Char64RefID;
+	Int32Type			Int32RefID;
 };
 
 ///持仓
+// TODO:如何记录股票的买卖，申购赎回，以及对应的冻结
+// 融资融券是如何记录，使用AccountID来区分普通账户与信用账户吗？
+// 能否记录港股？
 struct PositionField
 {
-	///合约名称
+	///合约名称，主要考虑到股票的数字辨识度不够，加上中文
 	InstrumentNameType	InstrumentName;
 	///唯一符号
 	SymbolType			Symbol;
@@ -62,9 +69,9 @@ struct PositionField
 	///账号，证券中用于股东代码
 	IDChar32Type		AccountID;
 
-	///持仓方向
+	///持仓方向，如果有双向持仓，那应当至少是两个PositionField
 	PositionSide	Side;
-	///投保
+	///投保，计划用它来区分个股期权的备兑
 	HedgeFlagType	HedgeFlag;
 	///交易日
 	DateIntType		Date;
@@ -75,7 +82,7 @@ struct PositionField
 	QtyType			Position;
 	///今持仓=买卖+申赎
 	QtyType			TodayPosition;
-	///昨持仓,如果买卖、申赎成功了，历史就没有区别了
+	///昨持仓,如果买卖、申赎成功了，历史持仓就没有区别了
 	QtyType			HistoryPosition;
 	///昨日持仓冻结，要卖出时要先冻结
 	QtyType			HistoryFrozen;
@@ -157,7 +164,7 @@ struct OrderField
 	IDChar32Type		AccountID;
 
 
-	///订单方向
+	///订单方向，用来来区分买卖与申赎
 	OrderSide		Side;
 	///数量
 	QtyType			Qty;
@@ -173,14 +180,14 @@ struct OrderField
 	TimeIntType		Time;
 
 
-	///系统ID，其实是柜台ID，唯一
+	///系统ID，唯一，在CTP一类可指定OrderRef的API中，这是拼接成的字符串，在Tdx一类后生成ID的API中，这是柜台直接传来的唯一值
 	OrderIDType			ID;
 
 	//////////////////////////////////////////////////////////////////////////
 
-	///交易所生成的ID，此字段可供比较报单先后。不同交易所可能出现相同OrderID
+	///交易所或柜台生成的ID，可供比较报单先后。不同交易所或柜台可能出现相同OrderID
 	OrderIDType			OrderID;
-	///本地ID,只在委托时定位使用，收到回报后将使用ID
+	///本地ID,只在委托时定位使用，收到回报请使用ID，在CTP一类API中ID==LocalID
 	OrderIDType			LocalID;
 
 	///订单类型
@@ -248,7 +255,6 @@ struct TradeField
 	TimeIntType		Time;
 
 
-	
 	///所对应的Order的ID
 	OrderIDType		ID;
 
@@ -304,7 +310,7 @@ struct UserInfoField
 	IDChar32Type	UserID;
 	///密码
 	PasswordType	Password;
-	///扩展信息，通达信中用来做通讯密码
+	///扩展信息，Tdx中用来做通讯密码
 	Char64Type		ExtInfoChar64;
 	///扩展信息，32位的数字
 	Int32Type		ExtInfoInt32;
@@ -327,8 +333,9 @@ struct ErrorField
 ///日志信息
 struct LogField
 {
+	///日志级别
 	LogLevel	Level;
-
+	///消息内容
 	Char256Type	Message;
 };
 
@@ -373,11 +380,11 @@ struct DepthMarketDataNField
 	///毫秒
 	TimeIntType			UpdateMillisec;
 
-	///唯一符号
+	///唯一符号，这里的用途主要给map做映射，找到通知哪个合约来行情了使用
 	SymbolType			Symbol;
 	///合约代码
 	InstrumentIDType	InstrumentID;
-	///交易所代码
+	///交易所代码，枚举类型，主要是用于过滤使用，效率比字符串比较要高
 	ExchangeType		Exchange;
 
 	///最新价
@@ -432,6 +439,8 @@ struct DepthField
 };
 
 ///合约
+///TODO:是否要再补充一些？
+///对于ETF,ETF列表，开放式基金、分级基金这一类的是只在当前结构体中加，还是有什么别的方案处理？
 struct InstrumentField
 {
 	///合约名称
@@ -566,7 +575,11 @@ struct InvestorField
 
 
 
+
+
+
 //////////////////////////////////////////////////////////////////////////
+/// TODO:以下可能是要清理不用的
 struct ConfigInfoField
 {
 	bool DirectOutput;
